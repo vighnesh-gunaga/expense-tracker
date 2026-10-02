@@ -10,491 +10,304 @@ function Register() {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        userType: ""
     });
 
-    const [showPassword, setShowPassword] =
-        useState(false);
-
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [loading, setLoading] = useState(false);
 
-
-    /*
-     * Password validation
-     *
-     * Same requirement as backend:
-     *
-     * 8-15 characters
-     * lowercase
-     * uppercase
-     * number
-     * special character
-     */
-
-    const passwordRegex =
+    const passwordPattern =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
-
-    const handleChange = (event) => {
-
-        const {
-            name,
-            value
-        } = event.target;
-
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
         setFormData({
             ...formData,
             [name]: value
         });
 
-
-        /*
-         * Clear old messages
-         * while user is typing.
-         */
-
-        if (error) {
-            setError("");
-        }
-
-        if (success) {
-            setSuccess("");
-        }
-
+        setError("");
     };
 
+    const handleUserTypeSelect = (type) => {
+        setFormData({
+            ...formData,
+            userType: type
+        });
 
-    const isPasswordValid =
-        passwordRegex.test(
-            formData.password
-        );
+        setError("");
+    };
 
-
-    const handleSubmit = async (event) => {
-
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         setError("");
         setSuccess("");
 
-
-        /*
-         * Frontend password validation
-         */
-
-        if (!isPasswordValid) {
-
-            setError(
-                "Password must be 8-15 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)."
-            );
-
+        if (!formData.userType) {
+            setError("Please select what describes you.");
             return;
         }
 
-
-        setLoading(true);
-
+        if (!passwordPattern.test(formData.password)) {
+            setError(
+                "Password must be 8-15 characters with uppercase, lowercase, number and special character."
+            );
+            return;
+        }
 
         try {
 
-            await api.post(
-                "/api/auth/register",
-                formData
-            );
+            await api.post("/api/auth/register", formData);
 
-
-            setSuccess(
-                "Registration successful. Please login."
-            );
-
+            setSuccess("Registration successful! Redirecting to login...");
 
             setTimeout(() => {
-
                 navigate("/login");
+            }, 1500);
 
-            }, 1200);
+        } catch (err) {
 
-
-        } catch (error) {
-
-            if (error.response) {
-
-                setError(
-                    error.response.data?.message ||
-                    "Registration failed"
-                );
-
-            } else {
-
-                setError(
-                    "Unable to connect to server"
-                );
-
-            }
-
-        } finally {
-
-            setLoading(false);
-
+            setError(
+                err.response?.data?.message ||
+                "Registration failed. Please try again."
+            );
         }
-
     };
 
-
     return (
-
         <div className="auth-page">
 
-            <div className="auth-card register-card">
+            <div className="auth-card">
 
-
-                {/* =========================
-                    ILLUSTRATION
-                ========================== */}
-
-                <div className="auth-illustration">
-
-                    <div className="illustration-brand">
-
-                        <span className="brand-icon">
-                            ₹
-                        </span>
-
-                        <span>
-                            Expense Tracker
-                        </span>
-
-                    </div>
-
-
-                    <div className="illustration-content">
-
-                        <div className="illustration-person person-one">
-                            👨‍💼
-                        </div>
-
-
-                        <div className="illustration-document">
-
-                            <div className="document-header">
-                                Expense Summary
-                            </div>
-
-                            <div className="document-line large">
-                            </div>
-
-                            <div className="document-line">
-                            </div>
-
-                            <div className="document-line short">
-                            </div>
-
-
-                            <div className="document-chart">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div className="illustration-coin coin-one">
-                            ₹
-                        </div>
-
-                        <div className="illustration-coin coin-two">
-                            ₹
-                        </div>
-
-
-                        <div className="illustration-plant">
-                            🌱
-                        </div>
-
-                    </div>
-
+                <div className="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Start managing your money smarter</p>
                 </div>
 
+                <form onSubmit={handleSubmit}>
 
-                {/* =========================
-                    FORM
-                ========================== */}
+                    {/* Name */}
+                    <div className="form-group">
+                        <label>Full Name</label>
 
-                <div className="auth-form-section">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                    <h1>
-                        Sign up
-                    </h1>
+                    {/* Email */}
+                    <div className="form-group">
+                        <label>Email</label>
 
-                    <p className="auth-subtitle">
-                        Create your account and start managing your money.
-                    </p>
-
-
-                    {/* ERROR */}
-
-                    {error && (
-
-                        <div className="auth-error">
-
-                            {error}
-
-                        </div>
-
-                    )}
-
-
-                    {/* SUCCESS */}
-
-                    {success && (
-
-                        <div className="auth-success">
-
-                            {success}
-
-                        </div>
-
-                    )}
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
 
-                    <form
-                        className="auth-form"
-                        onSubmit={handleSubmit}
-                    >
+                    {/* User Type */}
+                    <div className="form-group">
 
+                        <label>What describes you?</label>
 
-                        {/* NAME */}
+                        <div className="user-type-grid">
 
-                        <div className="form-group">
-
-                            <label>
-                                Full Name
-                            </label>
-
-                            <div className="input-wrapper">
-
-                                {/*<span className="input-icon">*/}
-                                {/*    👤*/}
-                                {/*</span>*/}
-
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Enter your name"
-                                    value={formData.name}
-                                    onChange={
-                                        handleChange
-                                    }
-                                    required
-                                    minLength={2}
-                                    maxLength={20}
-                                />
-
-                            </div>
-
-                        </div>
-
-
-                        {/* EMAIL */}
-
-                        <div className="form-group">
-
-                            <label>
-                                Email Address
-                            </label>
-
-                            <div className="input-wrapper">
-
-                                {/*<span className="input-icon">*/}
-                                {/*    ✉*/}
-                                {/*</span>*/}
-
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Enter your email"
-                                    value={formData.email}
-                                    onChange={
-                                        handleChange
-                                    }
-                                    required
-                                />
-
-                            </div>
-
-                        </div>
-
-
-                        {/* PASSWORD */}
-
-                        <div className="form-group">
-
-                            <label>
-                                Password
-                            </label>
-
-
-                            <div className="input-wrapper">
-
-                                {/*<span className="input-icon">*/}
-                                {/*    🔒*/}
-                                {/*</span>*/}
-
-
-                                <input
-                                    type={
-                                        showPassword
-                                            ? "text"
-                                            : "password"
-                                    }
-                                    name="password"
-                                    placeholder="Create a password"
-                                    value={
-                                        formData.password
-                                    }
-                                    onChange={
-                                        handleChange
-                                    }
-                                    required
-                                    minLength={8}
-                                    maxLength={15}
-                                />
-
-
-                                <button
-                                    type="button"
-                                    className="password-toggle"
-                                    onClick={() =>
-                                        setShowPassword(
-                                            !showPassword
-                                        )
-                                    }
-                                    aria-label={
-                                        showPassword
-                                            ? "Hide password"
-                                            : "Show password"
-                                    }
-                                >
-
-                                    {showPassword
-                                        ? "🙈"
-                                        : "👁"}
-
-                                </button>
-
-                            </div>
-
-
-                            {/* PASSWORD REQUIREMENTS */}
-
-                            <div
-                                className={
-                                    `password-help ${
-                                        formData.password.length === 0
-                                            ? ""
-                                            : isPasswordValid
-                                                ? "password-valid"
-                                                : "password-invalid"
-                                    }`
+                            {/* Student */}
+                            <button
+                                type="button"
+                                className={`user-type-card ${
+                                    formData.userType === "STUDENT"
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleUserTypeSelect("STUDENT")
                                 }
                             >
+                                <span className="user-type-icon">🎓</span>
 
-                                {formData.password.length === 0 ? (
+                                <span className="user-type-title">
+                                    Student
+                                </span>
 
-                                    <>
-                                        8–15 characters with uppercase,
-                                        lowercase, number and special
-                                        character.
-                                    </>
+                                <span className="user-type-description">
+                                    Track education, food, travel and daily expenses
+                                </span>
+                            </button>
 
-                                ) : isPasswordValid ? (
 
-                                    <>
-                                        ✓ Password meets all requirements.
-                                    </>
+                            {/* Working Professional */}
+                            <button
+                                type="button"
+                                className={`user-type-card ${
+                                    formData.userType === "WORKING_PROFESSIONAL"
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleUserTypeSelect(
+                                        "WORKING_PROFESSIONAL"
+                                    )
+                                }
+                            >
+                                <span className="user-type-icon">💼</span>
 
-                                ) : (
+                                <span className="user-type-title">
+                                    Working Professional
+                                </span>
 
-                                    <>
-                                        Password must contain:
-                                        <br />
-                                        • 8–15 characters
-                                        <br />
-                                        • At least one uppercase letter
-                                        <br />
-                                        • At least one lowercase letter
-                                        <br />
-                                        • At least one number
-                                        <br />
-                                        • At least one special character
-                                        (@$!%*?&)
-                                    </>
+                                <span className="user-type-description">
+                                    Manage salary, bills, rent and savings
+                                </span>
+                            </button>
 
-                                )}
 
-                            </div>
+                            {/* Business Owner */}
+                            <button
+                                type="button"
+                                className={`user-type-card ${
+                                    formData.userType === "BUSINESS_OWNER"
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleUserTypeSelect("BUSINESS_OWNER")
+                                }
+                            >
+                                <span className="user-type-icon">🏢</span>
+
+                                <span className="user-type-title">
+                                    Business Owner
+                                </span>
+
+                                <span className="user-type-description">
+                                    Manage business income and expenses
+                                </span>
+                            </button>
+
+
+                            {/* Freelancer */}
+                            <button
+                                type="button"
+                                className={`user-type-card ${
+                                    formData.userType === "FREELANCER"
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleUserTypeSelect("FREELANCER")
+                                }
+                            >
+                                <span className="user-type-icon">💻</span>
+
+                                <span className="user-type-title">
+                                    Freelancer
+                                </span>
+
+                                <span className="user-type-description">
+                                    Track projects, earnings and personal expenses
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                    {/* Password */}
+                    <div className="form-group">
+
+                        <label>Password</label>
+
+                        <div className="password-wrapper">
+
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Create a password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() =>
+                                    setShowPassword(!showPassword)
+                                }
+                            >
+                                {showPassword ? "🙈" : "👁"}
+                            </button>
 
                         </div>
 
-
-                        {/* REGISTER BUTTON */}
-
-                        <button
-                            type="submit"
-                            className="auth-submit-button"
-                            disabled={loading}
-                        >
-
-                            {loading
-                                ? "Creating Account..."
-                                : "Sign up"
-                            }
-
-                        </button>
-
-                    </form>
-
-
-                    {/* LOGIN */}
-
-                    <div className="auth-switch">
-
-                        <span>
-                            Already have an account?
-                        </span>
-
-                        <Link to="/login">
-                            Sign in
-                        </Link>
+                        <small className="password-hint">
+                            8–15 characters, uppercase, lowercase, number
+                            and special character (@$!%*?&)
+                        </small>
 
                     </div>
+
+
+                    {/* Error */}
+                    {error && (
+                        <div className="auth-error">
+                            {error}
+                        </div>
+                    )}
+
+
+                    {/* Success */}
+                    {success && (
+                        <div className="auth-success">
+                            {success}
+                        </div>
+                    )}
+
+
+                    {/* Register Button */}
+                    <button
+                        type="submit"
+                        className="auth-button"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <div className="auth-footer">
+
+                    <p>
+                        Already have an account?{" "}
+                        <Link to="/login">
+                            Login
+                        </Link>
+                    </p>
+
+                    <span>
+                        Developed by Vighnesh Gunaga
+                    </span>
 
                 </div>
 
             </div>
 
-
-            {/* FOOTER */}
-
-            <footer className="auth-footer">
-
-                Developed by
-
-                <strong>
-                    {" "}Vighnesh Gunaga
-                </strong>
-
-            </footer>
-
         </div>
-
     );
 }
 

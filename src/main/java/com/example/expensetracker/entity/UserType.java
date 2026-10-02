@@ -8,5 +8,7 @@ public enum UserType {
 
     FREELANCER,
 
+    BUSINESS_OWNER,
+
     OTHER
 }

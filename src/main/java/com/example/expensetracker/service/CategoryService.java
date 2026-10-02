@@ -3,6 +3,7 @@ package com.example.expensetracker.service;
 import com.example.expensetracker.dto.CategoryRequestDto;
 import com.example.expensetracker.dto.CategoryResponseDto;
 import com.example.expensetracker.entity.Category;
+import com.example.expensetracker.entity.Type;
 import com.example.expensetracker.entity.User;
 import com.example.expensetracker.exception.CategoryNotFoundException;
 import com.example.expensetracker.exception.UserNotFoundException;
@@ -161,5 +162,95 @@ public class CategoryService {
         response.setType(category.getType());
 
         return response;
+    }
+
+    public void createDefaultCategories(User user) {
+
+        List<String> categories;
+
+        switch (user.getUserType()) {
+
+            case STUDENT -> categories = List.of(
+                    "Food",
+                    "Transport",
+                    "Education",
+                    "Books & Stationery",
+                    "Hostel/Rent",
+                    "Mobile & Internet",
+                    "Entertainment",
+                    "Shopping",
+                    "Health",
+                    "Personal Care",
+                    "Travel",
+                    "Other"
+            );
+
+            case WORKING_PROFESSIONAL -> categories = List.of(
+                    "Food",
+                    "Groceries",
+                    "Rent/Home",
+                    "Transport/Fuel",
+                    "Utilities",
+                    "Mobile & Internet",
+                    "Shopping",
+                    "Entertainment",
+                    "Health",
+                    "Insurance",
+                    "Investments/Savings",
+                    "Travel",
+                    "Personal Care",
+                    "Other"
+            );
+
+            case BUSINESS_OWNER -> categories = List.of(
+                    "Food",
+                    "Transport",
+                    "Office",
+                    "Business Supplies",
+                    "Employee Expenses",
+                    "Utilities",
+                    "Marketing",
+                    "Travel",
+                    "Shopping",
+                    "Health",
+                    "Business Services",
+                    "Other"
+            );
+
+            case FREELANCER -> categories = List.of(
+                    "Food",
+                    "Transport",
+                    "Workspace",
+                    "Internet",
+                    "Software & Tools",
+                    "Equipment",
+                    "Client Expenses",
+                    "Travel",
+                    "Shopping",
+                    "Health",
+                    "Entertainment",
+                    "Other"
+            );
+
+            default -> categories = List.of(
+                    "Food",
+                    "Transport",
+                    "Shopping",
+                    "Entertainment",
+                    "Health",
+                    "Other"
+            );
+        }
+
+        for (String categoryName : categories) {
+
+            Category category = new Category();
+
+            category.setName(categoryName);
+            category.setType(Type.EXPENSE);
+            category.setUser(user);
+
+            categoryRepository.save(category);
+        }
     }
 }

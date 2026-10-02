@@ -1,10 +1,12 @@
 package com.example.expensetracker.service;
 
 import com.example.expensetracker.dto.*;
+import com.example.expensetracker.entity.PasswordResetToken;
 import com.example.expensetracker.entity.Role;
 import com.example.expensetracker.entity.User;
 import com.example.expensetracker.exception.EmailAlreadyExistsException;
 import com.example.expensetracker.exception.UserNotFoundException;
+import com.example.expensetracker.repository.PasswordResetTokenRepository;
 import com.example.expensetracker.repository.UserRepository;
 import com.example.expensetracker.security.JwtService;
 import jakarta.transaction.Transactional;
@@ -13,12 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.expensetracker.entity.PasswordResetToken;
-import com.example.expensetracker.repository.PasswordResetTokenRepository;
-
-import java.util.UUID;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -35,126 +34,345 @@ public class UserService {
 
     private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
+    private final CategoryService categoryService;
+
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            JwtService jwtService,
+            PasswordResetTokenRepository passwordResetTokenRepository,
+            EmailService emailService,
+            CategoryService categoryService
+    ) {
+
         this.userRepository = userRepository;
+
         this.passwordEncoder = passwordEncoder;
+
         this.authenticationManager = authenticationManager;
+
         this.jwtService = jwtService;
-        this.passwordResetTokenRepository = passwordResetTokenRepository;
+
+        this.passwordResetTokenRepository =
+                passwordResetTokenRepository;
+
         this.emailService = emailService;
+
+        this.categoryService = categoryService;
     }
 
-    public UserResponseDto register(RegisterRequestDto register) {
-        if(userRepository.existsByEmail(register.getEmail()))
-        {
-            throw new EmailAlreadyExistsException("Email already exists");
-        }
-        User user = new User();
-        user.setName(register.getName());
-        user.setEmail(register.getEmail());
-        user.setPassword(passwordEncoder.encode(register.getPassword()));
-        user.setRole(Role.USER);
-        user.setCreatedAt(LocalDateTime.now());
 
+    // =========================
+    // REGISTER
+    // =========================
+
+    public UserResponseDto register(
+            RegisterRequestDto register
+    ) {
+
+        // Check whether email already exists
+        if (userRepository.existsByEmail(
+                register.getEmail()
+        )) {
+
+            throw new EmailAlreadyExistsException(
+                    "Email already exists"
+            );
+        }
+
+
+        // Create new user
+        User user = new User();
+
+
+        // Basic user information
+        user.setName(
+                register.getName()
+        );
+
+        user.setEmail(
+                register.getEmail()
+        );
+
+
+        // Encrypt password before saving
+        user.setPassword(
+                passwordEncoder.encode(
+                        register.getPassword()
+                )
+        );
+
+
+        // Default role
+        user.setRole(
+                Role.USER
+        );
+
+
+        // Save selected user type
+        user.setUserType(
+                register.getUserType()
+        );
+
+
+        // Account creation time
+        user.setCreatedAt(
+                LocalDateTime.now()
+        );
+
+
+        // Save user first
         userRepository.save(user);
 
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(user.getId());
-        userResponseDto.setName(user.getName());
-        userResponseDto.setEmail(user.getEmail());
-        userResponseDto.setRole(user.getRole());
-        userResponseDto.setCreatedAt(user.getCreatedAt());
+
+        // Create personalized default categories
+        // according to the selected user type
+        categoryService.createDefaultCategories(
+                user
+        );
+
+
+        // =========================
+        // RESPONSE
+        // =========================
+
+        UserResponseDto userResponseDto =
+                new UserResponseDto();
+
+
+        userResponseDto.setId(
+                user.getId()
+        );
+
+
+        userResponseDto.setName(
+                user.getName()
+        );
+
+
+        userResponseDto.setEmail(
+                user.getEmail()
+        );
+
+
+        userResponseDto.setRole(
+                user.getRole()
+        );
+
+
+        userResponseDto.setUserType(
+                user.getUserType()
+        );
+
+
+        userResponseDto.setCreatedAt(
+                user.getCreatedAt()
+        );
+
 
         return userResponseDto;
-
     }
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 
+    // =========================
+    // LOGIN
+    // =========================
+
+    public LoginResponseDto login(
+            LoginRequestDto loginRequestDto
+    ) {
+
+        // Authenticate user
         authenticationManager.authenticate(
+
                 new UsernamePasswordAuthenticationToken(
+
                         loginRequestDto.getEmail(),
+
                         loginRequestDto.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
-                .orElseThrow(()->new UserNotFoundException("User Not Found"));
 
-        String token = jwtService.generateToken(user.getEmail());
 
-        LoginResponseDto response = new LoginResponseDto();
+        // Find authenticated user
+        User user =
+                userRepository
+                        .findByEmail(
+                                loginRequestDto.getEmail()
+                        )
+                        .orElseThrow(
+                                () -> new UserNotFoundException(
+                                        "User Not Found"
+                                )
+                        );
 
-        response.setJwtToken(token);
+
+        // Generate JWT token
+        String token =
+                jwtService.generateToken(
+                        user.getEmail()
+                );
+
+
+        // Create response
+        LoginResponseDto response =
+                new LoginResponseDto();
+
+
+        response.setJwtToken(
+                token
+        );
+
 
         return response;
-
-
     }
+
+
+    // =========================
+    // FORGOT PASSWORD
+    // =========================
+
     @Transactional
-    public void forgotPassword(ForgotPasswordRequestDto request) {
+    public void forgotPassword(
+            ForgotPasswordRequestDto request
+    ) {
 
-        User user = userRepository
-                .findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new UserNotFoundException("User Not Found"));
+        // Find user by email
+        User user =
+                userRepository
+                        .findByEmail(
+                                request.getEmail()
+                        )
+                        .orElseThrow(
+                                () -> new UserNotFoundException(
+                                        "User Not Found"
+                                )
+                        );
 
-        // Delete old reset token
-        passwordResetTokenRepository.deleteByUserId(user.getId());
 
-        // Force DELETE to execute before INSERT
+        // Delete previous reset tokens
+        passwordResetTokenRepository
+                .deleteByUserId(
+                        user.getId()
+                );
+
+
         passwordResetTokenRepository.flush();
 
-        // Generate new token
-        String token = UUID.randomUUID().toString();
 
+        // Generate new reset token
+        String token =
+                UUID.randomUUID().toString();
+
+
+        // Create password reset token
         PasswordResetToken passwordResetToken =
                 new PasswordResetToken();
 
-        passwordResetToken.setToken(token);
-        passwordResetToken.setUser(user);
 
-        passwordResetTokenRepository.save(passwordResetToken);
+        passwordResetToken.setToken(
+                token
+        );
 
-        // Send email
+
+        passwordResetToken.setUser(
+                user
+        );
+
+
+        // Save reset token
+        passwordResetTokenRepository.save(
+                passwordResetToken
+        );
+
+
+        // Send reset email
         emailService.sendPasswordResetEmail(
                 user.getEmail(),
                 token
         );
     }
-    public void resetPassword(ResetPasswordRequestDto request) {
 
+
+    // =========================
+    // RESET PASSWORD
+    // =========================
+
+    public void resetPassword(
+            ResetPasswordRequestDto request
+    ) {
+
+        // Find reset token
         PasswordResetToken resetToken =
                 passwordResetTokenRepository
-                        .findByToken(request.getToken())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Invalid reset token"));
+                        .findByToken(
+                                request.getToken()
+                        )
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Invalid reset token"
+                                )
+                        );
 
-        User user = resetToken.getUser();
 
+        // Get associated user
+        User user =
+                resetToken.getUser();
+
+
+        // Encode new password
         user.setPassword(
                 passwordEncoder.encode(
                         request.getNewPassword()
                 )
         );
 
-        userRepository.save(user);
 
-        // Token can no longer be reused
-        passwordResetTokenRepository.delete(resetToken);
+        // Save updated user
+        userRepository.save(
+                user
+        );
+
+
+        // Delete used reset token
+        passwordResetTokenRepository.delete(
+                resetToken
+        );
     }
+
+
+    // =========================
+    // PROFILE
+    // =========================
 
     public UserProfileResponseDto getProfile() {
 
-        User user = getCurrentUser();
+        User user =
+                getCurrentUser();
+
 
         return new UserProfileResponseDto(
+
                 user.getId(),
+
                 user.getName(),
+
                 user.getEmail(),
+
                 user.getCreatedAt()
         );
     }
+
+
+    // =========================
+    // CURRENT USER
+    // =========================
 
     private User getCurrentUser() {
 
@@ -164,9 +382,15 @@ public class UserService {
                         .getAuthentication()
                         .getName();
 
+
         return userRepository
-                .findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                .findByEmail(
+                        email
+                )
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "User not found"
+                        )
+                );
     }
 }
