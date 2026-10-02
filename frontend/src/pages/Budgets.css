@@ -1,0 +1,487 @@
+/* ==============================
+   BUDGET PAGE
+============================== */
+
+.budgets-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.budgets-title {
+    margin: 0 0 30px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+/* ==============================
+   MESSAGES
+============================== */
+
+.budget-error,
+.budget-success {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.budget-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.budget-success {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+
+/* ==============================
+   BUDGET SECTION
+============================== */
+
+.budget-section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.budget-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.budget-section-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #1f2937;
+}
+
+.budget-section-header span {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ==============================
+   BUDGET GRID
+============================== */
+
+.budget-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+
+/* ==============================
+   BUDGET CARD
+============================== */
+
+.budget-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.budget-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==============================
+   CARD HEADER
+============================== */
+
+.budget-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.budget-card-header h3 {
+    margin: 0;
+    font-size: 19px;
+    color: #111827;
+}
+
+.budget-type {
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* ==============================
+   BUDGET INFORMATION
+============================== */
+
+.budget-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.budget-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.budget-info:last-child {
+    border-bottom: none;
+}
+
+.budget-info span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.budget-info strong {
+    color: #1f2937;
+    font-size: 15px;
+}
+
+.budget-info:first-child strong {
+    color: #2563eb;
+    font-size: 20px;
+}
+
+
+/* ==============================
+   BUDGET ACTIONS
+============================== */
+
+.budget-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.budget-actions button {
+    flex: 1;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.budget-edit-button {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.budget-delete-button {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.budget-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+/* ==============================
+   EMPTY STATE
+============================== */
+
+.empty-budget {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.empty-budget h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #374151;
+}
+
+.empty-budget p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media (max-width: 950px) {
+
+    .budget-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .budgets-page {
+        padding: 20px;
+    }
+
+    .budgets-title {
+        font-size: 28px;
+    }
+
+    .budget-section {
+        padding: 18px;
+    }
+
+    .budget-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .budget-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .budgets-page {
+        padding: 15px;
+    }
+
+    .budget-card {
+        padding: 16px;
+    }
+
+    .budget-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+/* ==============================
+   BUDGET FORM
+============================== */
+
+.budget-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.budget-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.budget-form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.budget-form-group input,
+.budget-form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 14px;
+    outline: none;
+}
+
+.budget-form-group input:focus,
+.budget-form-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.budget-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
+
+.budget-submit-button,
+.budget-cancel-button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.budget-submit-button {
+    background: #2563eb;
+    color: white;
+}
+
+.budget-cancel-button {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.budget-submit-button:hover {
+    opacity: 0.9;
+}
+
+.budget-cancel-button:hover {
+    background: #d1d5db;
+}
+
+
+/* ==============================
+   MOBILE FORM
+============================== */
+
+@media (max-width: 650px) {
+
+    .budget-form {
+        grid-template-columns: 1fr;
+    }
+
+    .budget-form-actions {
+        grid-column: auto;
+    }
+
+}
+/* ==============================
+   BUDGET SUMMARY
+============================== */
+
+.budget-summary {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.budget-summary h4 {
+    margin: 0 0 14px;
+    font-size: 16px;
+}
+
+.budget-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.budget-summary-row span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.budget-summary-row strong {
+    font-size: 14px;
+}
+
+
+/* ==============================
+   STATUS
+============================== */
+
+.budget-status {
+    font-size: 13px !important;
+    padding: 4px 9px;
+    border-radius: 5px;
+}
+
+.budget-status.within-budget {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.budget-status.budget-reached {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.budget-status.over-budget {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+
+/* ==============================
+   PROGRESS
+============================== */
+
+.budget-progress-section {
+    margin-top: 18px;
+}
+
+.budget-progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    font-size: 13px;
+}
+
+.budget-progress-bar {
+    width: 100%;
+    height: 9px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.budget-progress-fill {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.budget-progress-fill.over-budget {
+    background: #dc2626;
+}
+
+
+/* ==============================
+   SUMMARY ERROR
+============================== */
+
+.budget-summary-loading {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f3f4f6;
+    border-radius: 6px;
+    color: #6b7280;
+    font-size: 13px;
+}

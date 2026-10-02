@@ -1,0 +1,934 @@
+/* =========================================
+   AUTH PAGE
+========================================= */
+
+.auth-page {
+    min-height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 15px;
+
+    box-sizing: border-box;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f8fafc
+            );
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 20px 45px rgba(31, 41, 55, 0.18);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   ILLUSTRATION AREA
+========================================= */
+
+.auth-illustration {
+    position: relative;
+
+    width: 100%;
+    height: 260px;
+
+    overflow: hidden;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #4f6df5,
+                    #4f46e5 55%,
+                    #6d3df2
+            );
+
+    color: white;
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.illustration-brand {
+    position: absolute;
+
+    top: 22px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    white-space: nowrap;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    z-index: 10;
+}
+
+.brand-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   ILLUSTRATION CONTENT
+========================================= */
+
+.illustration-content {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 310px;
+    height: 190px;
+
+    transform: translateX(-50%);
+}
+
+
+/* =========================================
+   DOCUMENT
+========================================= */
+
+.illustration-document {
+    position: absolute;
+
+    left: 50%;
+    bottom: 12px;
+
+    transform: translateX(-50%);
+
+    width: 155px;
+    height: 145px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.18);
+
+    color: #334155;
+}
+
+
+/* document top */
+
+.document-header {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+
+    color: #4f46e5;
+}
+
+
+/* document lines */
+
+.document-line {
+    width: 85%;
+
+    height: 5px;
+
+    margin-bottom: 7px;
+
+    border-radius: 10px;
+
+    background: #dbeafe;
+}
+
+.document-line.large {
+    width: 100%;
+}
+
+.document-line.short {
+    width: 55%;
+}
+
+
+/* =========================================
+   CHART INSIDE DOCUMENT
+========================================= */
+
+.document-chart {
+    position: absolute;
+
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    gap: 7px;
+}
+
+.document-chart span {
+    width: 17px;
+
+    border-radius: 4px 4px 0 0;
+
+    background: linear-gradient(
+            to top,
+            #6366f1,
+            #818cf8
+    );
+}
+
+.document-chart span:nth-child(1) {
+    height: 25px;
+}
+
+.document-chart span:nth-child(2) {
+    height: 42px;
+}
+
+.document-chart span:nth-child(3) {
+    height: 32px;
+}
+
+.document-chart span:nth-child(4) {
+    height: 50px;
+}
+
+
+/* =========================================
+   PERSON
+========================================= */
+
+.illustration-person {
+    position: absolute;
+
+    z-index: 5;
+
+    font-size: 58px;
+
+    filter:
+            drop-shadow(
+                    0 8px 8px rgba(0, 0, 0, 0.2)
+            );
+}
+
+.person-one {
+    left: 15px;
+    bottom: 35px;
+}
+
+
+/* =========================================
+   COINS
+========================================= */
+
+.illustration-coin {
+    position: absolute;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #facc15,
+                    #f97316
+            );
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+            0 5px 12px rgba(0, 0, 0, 0.2);
+
+    z-index: 7;
+}
+
+.coin-one {
+    right: 30px;
+    top: 55px;
+}
+
+.coin-two {
+    right: 60px;
+    top: 105px;
+
+    width: 27px;
+    height: 27px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   PLANT
+========================================= */
+
+.illustration-plant {
+    position: absolute;
+
+    left: 5px;
+    bottom: 0;
+
+    font-size: 48px;
+
+    z-index: 3;
+}
+
+
+/* =========================================
+   FORM SECTION
+========================================= */
+
+.auth-form-section {
+    padding: 30px 32px 28px;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.auth-form-section h1 {
+    margin: 0;
+
+    color: #172554;
+
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.auth-subtitle {
+    margin: 7px 0 23px;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.auth-error {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    border: 1px solid #fecaca;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+.auth-success {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    border: 1px solid #bbf7d0;
+
+    background: #f0fdf4;
+
+    color: #15803d;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.auth-form {
+    width: 100%;
+}
+
+.form-group {
+    width: 100%;
+
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   PASSWORD LABEL
+========================================= */
+
+.password-label-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.forgot-link {
+    color: #6366f1;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   INPUT WRAPPER
+========================================= */
+
+.input-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   INPUT ICON
+========================================= */
+
+.input-icon {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.input-wrapper input {
+    width: 100%;
+
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding:
+            0 42px 0 40px;
+
+    border: 1px solid #d7dce5;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    outline: none;
+
+    color: #1e293b;
+
+    font-size: 13px;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: #a1a9b8;
+}
+
+.input-wrapper input:focus {
+    border-color: #6366f1;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(99, 102, 241, 0.1);
+}
+
+
+/* =========================================
+   PASSWORD EYE
+========================================= */
+
+.password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 8px;
+
+    transform: translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    padding: 0;
+}
+
+.password-toggle:hover {
+    background: #f1f5f9;
+
+    border-radius: 7px;
+}
+
+
+/* =========================================
+   PASSWORD HELP
+========================================= */
+
+.password-help {
+    margin-top: 7px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.password-invalid {
+    color: #dc2626;
+}
+
+.password-valid {
+    color: #16a34a;
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.auth-submit-button {
+    width: 100%;
+
+    height: 46px;
+
+    margin-top: 3px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #3348c5,
+                    #4338ca
+            );
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 4px 10px
+            rgba(67, 56, 202, 0.25);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            opacity 0.2s ease;
+}
+
+.auth-submit-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 7px 15px
+            rgba(67, 56, 202, 0.3);
+}
+
+.auth-submit-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.auth-submit-button:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   LOGIN / REGISTER SWITCH
+========================================= */
+
+.auth-switch {
+    margin-top: 19px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #edf0f4;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+.auth-switch a {
+    color: #4f46e5;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.auth-footer {
+    margin-top: 18px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+.auth-footer strong {
+    color: #4f46e5;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        min-height: 100vh;
+
+        padding:
+                15px 12px 20px;
+
+        justify-content: center;
+    }
+
+
+    .auth-card {
+        width: 100%;
+
+        max-width: 390px;
+
+        border-radius: 20px;
+    }
+
+
+    .auth-illustration {
+        height: 215px;
+    }
+
+
+    .illustration-brand {
+        top: 17px;
+
+        font-size: 16px;
+    }
+
+
+    .illustration-content {
+        width: 270px;
+
+        height: 160px;
+    }
+
+
+    .illustration-document {
+        width: 135px;
+
+        height: 125px;
+
+        padding: 12px;
+    }
+
+
+    .illustration-person {
+        font-size: 47px;
+    }
+
+
+    .person-one {
+        left: 5px;
+
+        bottom: 25px;
+    }
+
+
+    .illustration-coin {
+        width: 30px;
+        height: 30px;
+
+        font-size: 13px;
+    }
+
+
+    .coin-one {
+        right: 20px;
+
+        top: 45px;
+    }
+
+
+    .coin-two {
+        right: 45px;
+
+        top: 88px;
+    }
+
+
+    .illustration-plant {
+        font-size: 40px;
+    }
+
+
+    .auth-form-section {
+        padding:
+                25px 22px 23px;
+    }
+
+
+    .auth-form-section h1 {
+        font-size: 24px;
+    }
+
+
+    .auth-subtitle {
+        font-size: 13px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .input-wrapper input {
+        height: 47px;
+    }
+
+
+    .auth-submit-button {
+        height: 47px;
+    }
+
+
+    .auth-footer {
+        margin-top: 14px;
+
+        font-size: 11px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+
+    .auth-page {
+        padding:
+                10px 8px 15px;
+    }
+
+
+    .auth-card {
+        border-radius: 17px;
+    }
+
+
+    .auth-illustration {
+        height: 190px;
+    }
+
+
+    .illustration-brand {
+        font-size: 14px;
+    }
+
+
+    .illustration-content {
+        transform:
+                translateX(-50%)
+                scale(0.88);
+
+        transform-origin:
+                center bottom;
+    }
+
+
+    .auth-form-section {
+        padding:
+                22px 18px 20px;
+    }
+
+
+    .auth-form-section h1 {
+        font-size: 22px;
+    }
+
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+
+    .input-wrapper input {
+        height: 45px;
+
+        font-size: 13px;
+    }
+
+
+    .auth-submit-button {
+        height: 45px;
+    }
+
+}

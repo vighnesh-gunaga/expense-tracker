@@ -1,0 +1,36 @@
+.back-dashboard-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.back-dashboard-button:hover {
+    background: #f8fafc;
+
+    border-color: #c7d2fe;
+
+    color: #6366f1;
+
+    transform: translateX(-2px);
+}
