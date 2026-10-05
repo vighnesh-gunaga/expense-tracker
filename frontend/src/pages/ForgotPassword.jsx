@@ -24,9 +24,7 @@ function ForgotPassword() {
 
             const response = await api.post(
                 "/api/auth/forgot-password",
-                {
-                    email: email
-                }
+                { email: email }
             );
 
             setMessage(response.data);
@@ -34,149 +32,108 @@ function ForgotPassword() {
         } catch (error) {
 
             if (error.response) {
-
                 setError(
                     error.response.data.message ||
                     "Unable to process request"
                 );
-
             } else {
-
-                setError(
-                    "Unable to connect to server"
-                );
-
+                setError("Unable to connect to server");
             }
 
         } finally {
-
             setLoading(false);
-
         }
     };
 
     return (
 
-        <div className="auth-page">
+        <div className="fp-page">
 
-            <div className="auth-card">
+            <div className="fp-card">
 
-                <div className="reset-brand">
+                {/* BRAND */}
 
-                    <div className="reset-logo">
-                        ₹
-                    </div>
-
-                    <h1>
-                        Expense Tracker
-                    </h1>
-
+                <div className="fp-brand">
+                    <div className="fp-logo">₹</div>
+                    <h1>Expense Tracker</h1>
                 </div>
 
+                {/* CONTENT */}
 
-                <div className="auth-content">
+                <div className="fp-content">
 
-                    <div className="auth-icon-circle">
-                        🔐
-                    </div>
+                    <div className="fp-icon-circle">🔐</div>
 
-                    <h2>
-                        Forgot Password?
-                    </h2>
+                    <h2>Forgot Password?</h2>
 
-                    <p className="auth-description">
+                    <p className="fp-description">
                         Enter your registered email address
                         and we'll send you a password reset link.
                     </p>
 
-
                     {message && (
-
-                        <div className="auth-success">
+                        <div className="fp-success">
                             ✓ {message}
                         </div>
-
                     )}
-
 
                     {error && (
-
-                        <div className="auth-error">
+                        <div className="fp-error">
                             {error}
                         </div>
-
                     )}
-
 
                     <form
                         onSubmit={handleForgotPassword}
-                        className="auth-form"
+                        className="fp-form"
                     >
 
-                        <div className="form-group">
+                        <div className="fp-group">
 
-                            <label>
+                            <label htmlFor="fp-email">
                                 Email Address
                             </label>
 
-                            <div className="input-wrapper">
-
-                                {/*<span className="input-icon">*/}
-                                {/*    ✉*/}
-                                {/*</span>*/}
-
+                            <div className="fp-input-wrap">
                                 <input
+                                    id="fp-email"
                                     type="email"
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(event) =>
-                                        setEmail(
-                                            event.target.value
-                                        )
+                                        setEmail(event.target.value)
                                     }
                                     required
                                 />
-
                             </div>
 
                         </div>
 
-
                         <button
                             type="submit"
-                            className="auth-primary-button"
+                            className="fp-submit"
                             disabled={loading}
                         >
-
-                            {loading
-                                ? "Sending..."
-                                : "Send Reset Link"}
-
+                            {loading ? "Sending..." : "Send Reset Link"}
                         </button>
 
                     </form>
 
-
                     <button
                         type="button"
-                        className="auth-back-button"
-                        onClick={() =>
-                            navigate("/login")
-                        }
+                        className="fp-back"
+                        onClick={() => navigate("/login")}
                     >
                         ← Back to Login
                     </button>
 
                 </div>
 
+                {/* FOOTER */}
 
-                <div className="auth-footer">
-
+                <div className="fp-footer">
                     Developed by
-                    <strong>
-                        Vighnesh Gunaga
-                    </strong>
-
+                    <strong>Vighnesh Gunaga</strong>
                 </div>
 
             </div>

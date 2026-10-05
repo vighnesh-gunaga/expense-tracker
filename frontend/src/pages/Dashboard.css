@@ -1,1780 +1,1040 @@
-/* =====================================================
-   DASHBOARD
-===================================================== */
+/* ==========================================================
+   Dashboard.css — for Dashboard.jsx
+   Every rule is scoped under .dashboard-page, so generic class
+   names (panel-header, income-icon, budget-status ...) cannot
+   clash with the Transactions / Budgets / Categories pages.
+   ========================================================== */
+
+.dashboard-page,
+.dashboard-page *,
+.dashboard-page *::before,
+.dashboard-page *::after {
+    box-sizing: border-box;
+}
 
 .dashboard-page {
+    --d-green-900: #0c3027;
+    --d-green-800: #0f3d33;
+    --d-green-700: #17594a;
+    --d-green-500: #2f8a73;
+    --d-green-100: #e3f1ec;
+    --d-gold: #f2a93b;
+    --d-gold-dark: #d98e1f;
+    --d-bg: #eef1ea;
+    --d-card: #ffffff;
+    --d-ink: #17231f;
+    --d-muted: #66746f;
+    --d-line: #e2e6de;
+    --d-income: #1f9d6b;
+    --d-income-bg: #e2f5ec;
+    --d-expense: #d6453d;
+    --d-expense-bg: #fdecea;
+    --d-shadow: 0 2px 10px rgba(12, 48, 39, 0.06);
+
     width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
-
-    padding: 28px 32px 50px;
-
-    box-sizing: border-box;
-
-    background: #f7f8fc;
-
     min-height: 100vh;
+    padding: 28px max(20px, calc((100% - 1240px) / 2)) 24px;
+    background: var(--d-bg);
+    color: var(--d-ink);
+    text-align: left;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.dashboard-header {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 28px;
-}
-
-.dashboard-header h1 {
-    margin: 0;
-
-    font-size: 30px;
-    font-weight: 700;
-
-    color: #111827;
-}
-
-.dashboard-header p {
-    margin: 7px 0 0;
-
-    font-size: 14px;
-
-    color: #6b7280;
-}
-
-
-.dashboard-account-button {
-    width: 46px;
-    height: 46px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    box-shadow:
-            0 3px 12px rgba(0, 0, 0, 0.08);
-
-    font-size: 21px;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.dashboard-account-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-            0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-
-/* =====================================================
-   QUICK ACTIONS
-===================================================== */
-
-.quick-actions {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 16px;
-
-    margin-bottom: 25px;
-}
-
-.quick-action-button {
-    border: none;
-
-    border-radius: 14px;
-
-    padding: 16px 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.quick-action-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-            0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-
-.transaction-action {
-    background: #eef2ff;
-    color: #4f46e5;
-}
-
-
-.budget-action {
-    background: #ecfdf5;
-    color: #059669;
-}
-
-
-.category-action {
-    background: #fff7ed;
-    color: #ea580c;
-}
-
-
-.quick-action-icon {
-    width: 28px;
-    height: 28px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255, 255, 255, 0.8);
-
-    font-size: 18px;
-}
-
-
-/* =====================================================
-   SUMMARY CARDS
-===================================================== */
-
-.dashboard-summary-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 18px;
-
-    margin-bottom: 24px;
-}
-
-
-.summary-card {
-    position: relative;
-
-    padding: 22px;
-
-    min-height: 145px;
-
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    box-shadow:
-            0 3px 15px rgba(0, 0, 0, 0.05);
-
-    overflow: hidden;
-}
-
-
-.summary-card::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-    bottom: 0;
-
-    width: 4px;
-}
-
-
-.balance-card::before {
-    background: #6366f1;
-}
-
-.income-card::before {
-    background: #22c55e;
-}
-
-.expense-card::before {
-    background: #ef4444;
-}
-
-.budget-card::before {
-    background: #f97316;
-}
-
-
-.summary-label {
-    display: block;
-
-    font-size: 13px;
-
-    color: #6b7280;
-
-    margin-bottom: 10px;
-}
-
-
-.summary-card h2 {
-    margin: 0;
-
-    font-size: 25px;
-
-    color: #111827;
-}
-
-
-.summary-card p {
-    margin: 9px 0 0;
-
-    font-size: 12px;
-
-    color: #9ca3af;
-}
-
-
-/* =====================================================
-   PANELS
-===================================================== */
-
-.dashboard-panel {
-    background: #ffffff;
-
-    border-radius: 16px;
-
-    padding: 22px;
-
-    box-shadow:
-            0 3px 15px rgba(0, 0, 0, 0.05);
-
-    box-sizing: border-box;
-}
-
-
-.panel-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 15px;
-}
-
-
-.panel-header h2 {
-    margin: 0;
-
-    font-size: 18px;
-
-    color: #111827;
-}
-
-
-.panel-header p {
-    margin: 5px 0 0;
-
-    font-size: 12px;
-
-    color: #9ca3af;
-}
-
-
-/* =====================================================
-   INCOME EXPENSE CHART
-===================================================== */
-
-.income-expense-panel {
-    margin-bottom: 24px;
-}
-
-
-.income-expense-chart {
-    width: 100%;
-}
-
-
-/* =====================================================
-   CHART GRID
-===================================================== */
-
-.dashboard-chart-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 20px;
-
-    margin-bottom: 24px;
-}
-
-
-.expense-chart-container,
-.trend-chart-container {
-    width: 100%;
-}
-
-
-/* =====================================================
-   CALENDAR + BUDGET
-===================================================== */
-
-.dashboard-lower-grid {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.25fr)
-        minmax(0, 0.75fr);
-
-    gap: 20px;
-
-    margin-bottom: 24px;
-}
-
-
-/* =====================================================
-   CALENDAR
-===================================================== */
-
-.calendar-panel {
-    min-width: 0;
-}
-
-
-.calendar-controls {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-}
-
-
-.calendar-controls button {
-    border: 1px solid #e5e7eb;
-
-    background: #ffffff;
-
-    color: #374151;
-
-    width: 34px;
-    height: 32px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-size: 17px;
-
-    transition: 0.2s ease;
-}
-
-
-.calendar-controls button:hover {
-    background: #f3f4f6;
-}
-
-
-.calendar-controls .calendar-today-button {
-    width: auto;
-
-    padding: 0 11px;
-
-    font-size: 12px;
-
-    font-weight: 600;
-}
-
-
-/* =====================================================
-   SELECTED DATE CONTROLS
-===================================================== */
-
-.selected-date-controls {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 8px;
-
-    margin: 18px 0 12px;
-}
-
-
-.selected-date-controls button {
-    border: 1px solid #e5e7eb;
-
-    background: #ffffff;
-
-    color: #374151;
-
-    padding: 9px 13px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    transition: 0.2s ease;
-}
-
-
-.selected-date-controls button:hover {
-    background: #f3f4f6;
-}
-
-
-.selected-date-controls
-.selected-date-today {
-    background: #6366f1;
-
-    color: #ffffff;
-
-    border-color: #6366f1;
-}
-
-
-.selected-date-controls
-.selected-date-today:hover {
-    background: #4f46e5;
-}
-
-
-/* =====================================================
-   SELECTED DATE
-===================================================== */
-
-.selected-date-heading {
-    text-align: center;
-
-    margin: 10px 0 18px;
-}
-
-
-.selected-date-heading h3 {
-    margin: 0;
-
-    font-size: 16px;
-
-    color: #111827;
-}
-
-
-.selected-date-heading p {
-    margin: 5px 0 0;
-
-    font-size: 12px;
-
-    color: #6b7280;
-}
-
-
-/* =====================================================
-   CALENDAR TITLE
-===================================================== */
-
-.calendar-title {
-    text-align: center;
-
-    font-size: 17px;
-
-    font-weight: 700;
-
-    color: #111827;
-
-    margin-bottom: 15px;
-}
-
-
-/* =====================================================
-   WEEKDAYS
-===================================================== */
-
-.calendar-weekdays {
-    display: grid;
-
-    grid-template-columns:
-        repeat(7, 1fr);
-
-    gap: 6px;
-
-    margin-bottom: 7px;
-}
-
-
-.calendar-weekdays span {
-    text-align: center;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    color: #9ca3af;
-}
-
-
-/* =====================================================
-   CALENDAR GRID
-===================================================== */
-
-.calendar-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(7, minmax(0, 1fr));
-
-    gap: 6px;
-}
-
-
-.calendar-day {
-    position: relative;
-
-    min-height: 54px;
-
-    border: 1px solid #eef0f4;
-
-    background: #ffffff;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    transition: all 0.2s ease;
-
+.dashboard-page button {
     font-family: inherit;
-
-    padding: 5px;
 }
 
-
-.calendar-day:hover {
-    background: #f5f3ff;
-
-    border-color: #c7d2fe;
-
-    transform: translateY(-1px);
+.dashboard-page button:focus-visible {
+    outline: 3px solid rgba(47, 138, 115, 0.5);
+    outline-offset: 2px;
 }
 
-
-.calendar-day.empty {
-    border: none;
-
-    background: transparent;
-
-    cursor: default;
-}
-
-
-.calendar-day.today {
-    border: 2px solid #6366f1;
-}
-
-
-.calendar-day.selected {
-    background: #6366f1;
-
-    border-color: #6366f1;
-
-    color: #ffffff;
-}
-
-
-.calendar-day.selected:hover {
-    background: #4f46e5;
-}
-
-
-.calendar-number {
-    font-size: 13px;
-
-    color: #374151;
-}
-
-
-.calendar-day.selected
-.calendar-number {
-    color: #ffffff;
-
-    font-weight: 700;
-}
-
-
-/* =====================================================
-   CALENDAR INDICATORS
-===================================================== */
-
-.calendar-indicators {
-    display: flex;
-
-    gap: 4px;
-
-    margin-top: 5px;
-}
-
-
-.calendar-income-dot,
-.calendar-expense-dot {
-    width: 6px;
-
-    height: 6px;
-
-    border-radius: 50%;
-
-    display: inline-block;
-}
-
-
-.calendar-income-dot {
-    background: #22c55e;
-}
-
-
-.calendar-expense-dot {
-    background: #ef4444;
-}
-
-
-/* =====================================================
-   CALENDAR LEGEND
-===================================================== */
-
-.calendar-legend {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 20px;
-
-    margin-top: 15px;
-}
-
-
-.calendar-legend span {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    font-size: 11px;
-
-    color: #6b7280;
-}
-
-
-.calendar-legend i {
-    width: 7px;
-
-    height: 7px;
-
-    border-radius: 50%;
-
-    display: inline-block;
-}
-
-
-/* =====================================================
-   DAILY TRANSACTIONS
-===================================================== */
-
-.daily-transactions {
-    margin-top: 23px;
-
-    padding-top: 20px;
-
-    border-top: 1px solid #eef0f4;
-}
-
-
-.daily-transactions h3 {
-    margin: 0 0 13px;
-
-    font-size: 15px;
-
-    color: #111827;
-}
-
-
-.daily-empty {
-    padding: 18px;
-
-    text-align: center;
-
-    background: #f9fafb;
-
-    border-radius: 10px;
-
-    color: #6b7280;
-
-    font-size: 13px;
-}
-
-
-.daily-transaction-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-
-.daily-transaction-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 11px;
-
-    padding: 11px;
-
-    background: #f9fafb;
-
-    border-radius: 10px;
-
-    transition: 0.2s ease;
-}
-
-
-.daily-transaction-item:hover {
-    background: #f3f4f6;
-}
-
-
-.daily-transaction-icon {
-    width: 34px;
-
-    height: 34px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-weight: 700;
-
-    flex-shrink: 0;
-}
-
-
-.income-icon {
-    background: #dcfce7;
-
-    color: #16a34a;
-}
-
-
-.expense-icon {
-    background: #fee2e2;
-
-    color: #dc2626;
-}
-
-
-.daily-transaction-details {
-    flex: 1;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 3px;
-
-    min-width: 0;
-}
-
-
-.daily-transaction-details strong {
-    font-size: 13px;
-
-    color: #111827;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-
-.daily-transaction-details span {
-    font-size: 11px;
-
-    color: #6b7280;
-}
-
-
-.daily-transaction-amount {
-    font-size: 13px;
-
-    white-space: nowrap;
-}
-
-
-/* =====================================================
-   BUDGET
-===================================================== */
-
-.budget-summary-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 18px;
-}
-
-
-.dashboard-budget-item {
-    padding-bottom: 17px;
-
-    border-bottom: 1px solid #f0f1f4;
-}
-
-
-.dashboard-budget-item:last-child {
-    border-bottom: none;
-
-    padding-bottom: 0;
-}
-
-
-.dashboard-budget-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 12px;
-
-    margin-bottom: 9px;
-}
-
-
-.dashboard-budget-top > div {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
-}
-
-
-.dashboard-budget-top strong {
-    font-size: 13px;
-
-    color: #111827;
-}
-
-
-.dashboard-budget-top span {
-    font-size: 11px;
-
-    color: #6b7280;
-}
-
-
-.budget-status {
-    align-self: flex-start;
-
-    padding: 5px 8px;
-
-    border-radius: 20px;
-
-    font-size: 10px !important;
-
-    font-weight: 700;
-}
-
-
-.budget-status.within-budget {
-    background: #dcfce7;
-
-    color: #15803d;
-}
-
-
-.budget-status.exceeded {
-    background: #fee2e2;
-
-    color: #dc2626;
-}
-
-
-.budget-progress {
-    width: 100%;
-
-    height: 8px;
-
-    background: #f1f5f9;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-
-.budget-progress-fill {
-    height: 100%;
-
-    background: linear-gradient(
-            90deg,
-            #6366f1,
-            #8b5cf6
-    );
-
-    border-radius: 20px;
-
-    transition: width 0.3s ease;
-}
-
-
-.budget-progress-info {
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-top: 7px;
-
-    font-size: 10px;
-
-    color: #6b7280;
-}
-
-
-/* =====================================================
-   RECENT TRANSACTIONS
-===================================================== */
-
-.recent-transactions-panel {
-    margin-bottom: 20px;
-}
-
-
-.view-all-button {
-    border: none;
-
-    background: #eef2ff;
-
-    color: #4f46e5;
-
-    padding: 8px 12px;
-
-    border-radius: 7px;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.view-all-button:hover {
-    background: #e0e7ff;
-}
-
-
-.recent-transactions-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-
-.recent-transaction-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 13px;
-
-    background: #f9fafb;
-
-    border-radius: 10px;
-
-    transition: 0.2s ease;
-}
-
-
-.recent-transaction-item:hover {
-    background: #f3f4f6;
-}
-
-
-.transaction-icon {
-    width: 37px;
-
-    height: 37px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 17px;
-
-    font-weight: 700;
-
-    flex-shrink: 0;
-}
-
-
-.transaction-details {
-    flex: 1;
-
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
-}
-
-
-.transaction-details strong {
-    color: #111827;
-
-    font-size: 13px;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-
-.transaction-details span {
-    color: #6b7280;
-
-    font-size: 11px;
-}
-
-
-.transaction-amount {
-    font-size: 13px;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-}
-
-
-.transaction-amount.income {
-    color: #16a34a;
-}
-
-
-.transaction-amount.expense {
-    color: #dc2626;
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.dashboard-empty {
-    min-height: 200px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    color: #9ca3af;
-
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   LOADING
-===================================================== */
-
-.dashboard-loading {
+/* ==========================================================
+   LOADING / ERROR
+   ========================================================== */
+
+.dashboard-page .dashboard-loading {
     min-height: 70vh;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
+    gap: 16px;
+    color: var(--d-muted);
 }
 
-
-.dashboard-loading h2 {
-    color: #6b7280;
-
-    font-size: 17px;
-
-    font-weight: 500;
+.dashboard-page .dashboard-loading h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
 }
 
-
-.dashboard-spinner {
-    width: 35px;
-
-    height: 35px;
-
-    border: 4px solid #e5e7eb;
-
-    border-top-color: #6366f1;
-
+.dashboard-page .dashboard-spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid var(--d-line);
+    border-top-color: var(--d-green-700);
     border-radius: 50%;
-
-    animation:
-            dashboard-spin 0.8s linear infinite;
-
-    margin-bottom: 15px;
+    animation: dashboard-spin 0.8s linear infinite;
 }
-
 
 @keyframes dashboard-spin {
-
-    to {
-        transform: rotate(360deg);
-    }
-
+    to { transform: rotate(360deg); }
 }
 
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.dashboard-error {
-    padding: 20px;
-
-    background: #fee2e2;
-
-    color: #b91c1c;
-
-    border-radius: 10px;
-
+.dashboard-page .dashboard-error {
+    max-width: 560px;
+    margin: 12vh auto 16px;
+    padding: 14px 18px;
+    border: 1px solid #f3c2bd;
+    border-radius: 12px;
+    background: var(--d-expense-bg);
+    color: #a8231a;
+    font-size: 15px;
     text-align: center;
-
-    margin-bottom: 15px;
 }
 
-
-.dashboard-retry-button {
+.dashboard-page .dashboard-retry-button {
     display: block;
-
     margin: 0 auto;
-
-    padding: 10px 18px;
-
+    padding: 11px 28px;
     border: none;
-
-    border-radius: 8px;
-
-    background: #6366f1;
-
-    color: white;
-
-    cursor: pointer;
-
+    border-radius: 10px;
+    background: var(--d-green-800);
+    color: #fff;
+    font-size: 15px;
     font-weight: 600;
+    cursor: pointer;
 }
 
-
-/* =====================================================
-   RESPONSIVE - LAPTOP
-===================================================== */
-
-@media (max-width: 1200px) {
-
-    .dashboard-page {
-        padding: 24px;
-    }
-
-    .dashboard-summary-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-    .dashboard-lower-grid {
-        grid-template-columns:
-            1fr;
-    }
-
+.dashboard-page .dashboard-retry-button:hover {
+    background: var(--d-green-700);
 }
 
+/* ==========================================================
+   HEADER
+   ========================================================== */
 
-/* =====================================================
-   RESPONSIVE - TABLET
-===================================================== */
-
-@media (max-width: 850px) {
-
-    .dashboard-page {
-        padding: 20px 16px 40px;
-    }
-
-
-    .dashboard-chart-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .quick-actions {
-        grid-template-columns: 1fr;
-    }
-
-
-    .dashboard-header h1 {
-        font-size: 25px;
-    }
-
+.dashboard-page .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
 }
 
-
-/* =====================================================
-   RESPONSIVE - MOBILE
-===================================================== */
-
-@media (max-width: 600px) {
-
-    .dashboard-page {
-        padding: 16px 12px 35px;
-    }
-
-
-    .dashboard-header {
-        margin-bottom: 20px;
-    }
-
-
-    .dashboard-header h1 {
-        font-size: 22px;
-    }
-
-
-    .dashboard-header p {
-        font-size: 12px;
-    }
-
-
-    .dashboard-summary-grid {
-        grid-template-columns: 1fr;
-
-        gap: 12px;
-    }
-
-
-    .summary-card {
-        min-height: 120px;
-
-        padding: 18px;
-    }
-
-
-    .summary-card h2 {
-        font-size: 22px;
-    }
-
-
-    .dashboard-panel {
-        padding: 16px;
-
-        border-radius: 13px;
-    }
-
-
-    .panel-header h2 {
-        font-size: 16px;
-    }
-
-
-    .calendar-grid {
-        gap: 3px;
-    }
-
-
-    .calendar-day {
-        min-height: 43px;
-
-        border-radius: 6px;
-    }
-
-
-    .calendar-number {
-        font-size: 11px;
-    }
-
-
-    .calendar-weekdays {
-        gap: 3px;
-    }
-
-
-    .calendar-weekdays span {
-        font-size: 9px;
-    }
-
-
-    .selected-date-controls {
-        gap: 5px;
-    }
-
-
-    .selected-date-controls button {
-        padding: 8px 8px;
-
-        font-size: 10px;
-    }
-
-
-    .dashboard-budget-top {
-        flex-direction: column;
-    }
-
-
-    .budget-status {
-        align-self: flex-start;
-    }
-
-
-    .recent-transaction-item {
-        padding: 10px;
-    }
-
-
-    .transaction-icon {
-        width: 32px;
-
-        height: 32px;
-
-        font-size: 14px;
-    }
-
-
-    .transaction-amount {
-        font-size: 11px;
-    }
-
+.dashboard-page .dashboard-header h1 {
+    margin: 0 0 4px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--d-ink);
 }
-/* =========================
-   PROFILE BUTTON
-========================= */
 
-.dashboard-profile-button {
-    width: 46px;
-    height: 46px;
+.dashboard-page .dashboard-header p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--d-muted);
+}
 
-    border: none;
+.dashboard-page .dashboard-profile-button {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--d-gold);
     border-radius: 50%;
+    background: var(--d-green-800);
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+}
 
+.dashboard-page .dashboard-profile-button:hover {
+    background: var(--d-green-700);
+    transform: scale(1.05);
+}
+
+/* ==========================================================
+   PROFILE POPUP
+   ========================================================== */
+
+.dashboard-page .profile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: linear-gradient(
-            135deg,
-            #6366f1,
-            #7c3aed
-    );
-
-    color: #ffffff;
-
-    font-size: 17px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    box-shadow:
-            0 6px 18px rgba(
-                    99,
-                    102,
-                    241,
-                    0.25
-            );
-
-    transition: 0.2s ease;
+    padding: 16px;
 }
 
-
-.dashboard-profile-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-            0 10px 25px rgba(
-                    99,
-                    102,
-                    241,
-                    0.30
-            );
-}
-
-
-/* =========================
-   PROFILE OVERLAY
-========================= */
-
-.profile-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: flex;
-
-    justify-content: flex-end;
-
-    align-items: flex-start;
-
-    padding: 80px 35px 35px;
-}
-
-
-.profile-overlay-background {
+.dashboard-page .profile-overlay-background {
     position: absolute;
-
     inset: 0;
-
-    background: rgba(
-            15,
-            23,
-            42,
-            0.20
-    );
-
+    background: rgba(12, 48, 39, 0.55);
     backdrop-filter: blur(3px);
 }
 
-
-/* =========================
-   PROFILE CARD
-========================= */
-
-.profile-card {
+.dashboard-page .profile-card {
     position: relative;
-
-    z-index: 2;
-
-    width: 370px;
-
-    max-width: 100%;
-
-    padding: 30px;
-
-    background: #ffffff;
-
-    border-radius: 22px;
-
-    box-shadow:
-            0 25px 70px rgba(
-                    15,
-                    23,
-                    42,
-                    0.20
-            );
-
-    animation: profileSlideIn 0.2s ease;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    padding: 34px 28px 26px;
+    border-radius: 20px;
+    background: var(--d-card);
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    animation: profile-pop 0.18s ease-out;
 }
 
-
-@keyframes profileSlideIn {
-
-    from {
-        opacity: 0;
-
-        transform:
-                translateY(-10px)
-                scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-                translateY(0)
-                scale(1);
-    }
-
+@keyframes profile-pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
 }
 
-
-/* =========================
-   CLOSE
-========================= */
-
-.profile-close-button {
+.dashboard-page .profile-close-button {
     position: absolute;
-
-    top: 15px;
-    right: 18px;
-
-    width: 32px;
-    height: 32px;
-
+    top: 12px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
     border: none;
-
     border-radius: 50%;
-
-    background: #f1f5f9;
-
-    color: #64748b;
-
-    font-size: 22px;
-
+    background: transparent;
+    color: var(--d-muted);
+    font-size: 24px;
+    line-height: 1;
     cursor: pointer;
 }
 
-
-.profile-close-button:hover {
-    background: #e2e8f0;
-
-    color: #0f172a;
+.dashboard-page .profile-close-button:hover {
+    background: #eef1ec;
+    color: var(--d-ink);
 }
 
-
-/* =========================
-   AVATAR
-========================= */
-
-.profile-avatar {
-    width: 78px;
-    height: 78px;
-
-    margin: 5px auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.dashboard-page .profile-avatar {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 12px;
+    display: grid;
+    place-items: center;
+    border: 4px solid var(--d-gold);
     border-radius: 50%;
-
-    background: linear-gradient(
-            135deg,
-            #6366f1,
-            #7c3aed
-    );
-
-    color: white;
-
-    font-size: 30px;
-
+    background: var(--d-green-800);
+    color: #fff;
+    font-size: 32px;
     font-weight: 700;
-
-    box-shadow:
-            0 10px 25px rgba(
-                    99,
-                    102,
-                    241,
-                    0.25
-            );
 }
 
-
-.profile-card h2 {
+.dashboard-page .profile-card h2 {
     margin: 0;
-
-    text-align: center;
-
-    color: #111827;
-
-    font-size: 22px;
-}
-
-
-.profile-subtitle {
-    margin: 5px 0 25px;
-
-    text-align: center;
-
-    color: #94a3b8;
-
-    font-size: 13px;
-}
-
-
-/* =========================
-   INFORMATION
-========================= */
-
-.profile-information {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-
-.profile-info-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 14px;
-
-    background: #f8fafc;
-
-    border: 1px solid #f1f5f9;
-
-    border-radius: 13px;
-}
-
-
-.profile-info-icon {
-    width: 38px;
-    height: 38px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background: #eef2ff;
-
-    font-size: 16px;
-}
-
-
-.profile-info-item div {
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 3px;
-}
-
-
-.profile-info-item small {
-    color: #94a3b8;
-
-    font-size: 11px;
-
-    font-weight: 500;
-}
-
-
-.profile-info-item strong {
-    color: #334155;
-
-    font-size: 13px;
-
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
     word-break: break-word;
 }
 
-
-/* =========================
-   LOGOUT
-========================= */
-
-.profile-logout-button {
-    width: 100%;
-
-    height: 48px;
-
-    margin-top: 22px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    border: 1px solid #fecaca;
-
-    border-radius: 12px;
-
-    background: #fef2f2;
-
-    color: #dc2626;
-
+.dashboard-page .profile-subtitle {
+    margin: 4px 0 20px;
     font-size: 14px;
+    color: var(--d-muted);
+}
 
+.dashboard-page .profile-information {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.dashboard-page .profile-info-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--d-line);
+    border-radius: 12px;
+    background: #fafbf8;
+}
+
+.dashboard-page .profile-info-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--d-green-100);
+    font-size: 17px;
+}
+
+.dashboard-page .profile-info-item > div {
+    min-width: 0;
+}
+
+.dashboard-page .profile-info-item small {
+    display: block;
+    font-size: 12px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .profile-info-item strong {
+    display: block;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .profile-logout-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: 1.5px solid var(--d-expense);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--d-expense);
+    font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: background 0.15s, color 0.15s;
 }
 
-
-.profile-logout-button:hover {
-    background: #fee2e2;
+.dashboard-page .profile-logout-button:hover {
+    background: var(--d-expense);
+    color: #fff;
 }
 
+/* ==========================================================
+   QUICK ACTIONS
+   ========================================================== */
 
-/* =========================
-   MOBILE
-========================= */
+.dashboard-page .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.dashboard-page .quick-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px 10px 10px;
+    border: 1.5px solid var(--d-line);
+    border-radius: 14px;
+    background: var(--d-card);
+    color: var(--d-ink);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--d-shadow);
+    transition: border-color 0.15s, transform 0.1s;
+}
+
+.dashboard-page .quick-action-button:hover {
+    border-color: var(--d-green-500);
+}
+
+.dashboard-page .quick-action-button:active {
+    transform: translateY(1px);
+}
+
+.dashboard-page .quick-action-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.dashboard-page .transaction-action .quick-action-icon {
+    background: var(--d-green-800);
+    color: #fff;
+}
+
+.dashboard-page .budget-action .quick-action-icon {
+    background: var(--d-gold);
+    color: var(--d-green-900);
+}
+
+.dashboard-page .category-action .quick-action-icon {
+    background: var(--d-green-100);
+    color: var(--d-green-700);
+}
+
+/* ==========================================================
+   SUMMARY CARDS
+   ========================================================== */
+
+.dashboard-page .dashboard-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.dashboard-page .summary-card {
+    padding: 20px 22px;
+    border: 1px solid var(--d-line);
+    border-top-width: 4px;
+    border-radius: 16px;
+    background: var(--d-card);
+    box-shadow: var(--d-shadow);
+}
+
+.dashboard-page .summary-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--d-muted);
+}
+
+.dashboard-page .summary-card h2 {
+    margin: 8px 0 6px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .summary-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .income-card  { border-top-color: var(--d-income); }
+.dashboard-page .expense-card { border-top-color: var(--d-expense); }
+.dashboard-page .budget-card  { border-top-color: var(--d-gold); }
+
+.dashboard-page .income-card h2  { color: var(--d-income); }
+.dashboard-page .expense-card h2 { color: var(--d-expense); }
+
+/* The balance card is the one bold element on the page */
+
+.dashboard-page .balance-card {
+    border-color: var(--d-green-800);
+    background: var(--d-green-800);
+    color: #fff;
+}
+
+.dashboard-page .balance-card .summary-label,
+.dashboard-page .balance-card p {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.dashboard-page .balance-card h2 {
+    color: var(--d-gold);
+}
+
+/* ==========================================================
+   PANELS
+   ========================================================== */
+
+.dashboard-page .dashboard-panel {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--d-line);
+    border-radius: 16px;
+    background: var(--d-card);
+    box-shadow: var(--d-shadow);
+}
+
+.dashboard-page .income-expense-panel {
+    margin-bottom: 22px;
+}
+
+.dashboard-page .panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.dashboard-page .panel-header h2 {
+    margin: 0 0 3px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.dashboard-page .panel-header p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .income-expense-chart,
+.dashboard-page .expense-chart-container,
+.dashboard-page .trend-chart-container {
+    width: 100%;
+    min-width: 0;
+}
+
+.dashboard-page .dashboard-empty,
+.dashboard-page .daily-empty {
+    padding: 36px 16px;
+    border: 1.5px dashed var(--d-line);
+    border-radius: 12px;
+    background: #fafbf8;
+    color: var(--d-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.dashboard-page .daily-empty {
+    padding: 22px 16px;
+}
+
+/* ==========================================================
+   GRIDS
+   ========================================================== */
+
+.dashboard-page .dashboard-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.dashboard-page .dashboard-lower-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+/* ==========================================================
+   CALENDAR
+   ========================================================== */
+
+.dashboard-page .calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dashboard-page .calendar-controls button,
+.dashboard-page .selected-date-controls button {
+    padding: 8px 14px;
+    border: 1.5px solid var(--d-line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--d-ink);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.dashboard-page .calendar-controls button:hover,
+.dashboard-page .selected-date-controls button:hover {
+    border-color: var(--d-green-500);
+    background: #f6faf8;
+}
+
+.dashboard-page .calendar-controls button:first-child,
+.dashboard-page .calendar-controls button:last-child {
+    width: 36px;
+    padding: 8px 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.dashboard-page .calendar-today-button,
+.dashboard-page .selected-date-today {
+    border-color: var(--d-green-800) !important;
+    background: var(--d-green-800) !important;
+    color: #fff !important;
+}
+
+.dashboard-page .calendar-today-button:hover,
+.dashboard-page .selected-date-today:hover {
+    background: var(--d-green-700) !important;
+}
+
+.dashboard-page .selected-date-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.dashboard-page .selected-date-heading {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--d-gold);
+    border-radius: 10px;
+    background: #fafbf8;
+}
+
+.dashboard-page .selected-date-heading h3 {
+    margin: 0 0 2px;
+    font-size: 17px;
+}
+
+.dashboard-page .selected-date-heading p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .calendar-title {
+    margin-bottom: 12px;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dashboard-page .calendar-weekdays,
+.dashboard-page .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.dashboard-page .calendar-weekdays {
+    margin-bottom: 6px;
+}
+
+.dashboard-page .calendar-weekdays span {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--d-muted);
+}
+
+.dashboard-page .calendar-day {
+    position: relative;
+    min-height: 48px;
+    padding: 4px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    background: #f5f7f2;
+    color: var(--d-ink);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+}
+
+.dashboard-page .calendar-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.dashboard-page button.calendar-day:hover {
+    border-color: var(--d-green-500);
+    background: var(--d-green-100);
+}
+
+.dashboard-page .calendar-day.today {
+    border-color: var(--d-gold);
+    background: #fff6e6;
+}
+
+.dashboard-page .calendar-day.selected,
+.dashboard-page button.calendar-day.selected:hover {
+    border-color: var(--d-green-800);
+    background: var(--d-green-800);
+    color: #fff;
+}
+
+.dashboard-page .calendar-number {
+    line-height: 1;
+}
+
+.dashboard-page .calendar-indicators {
+    display: flex;
+    gap: 4px;
+    height: 7px;
+}
+
+.dashboard-page .calendar-income-dot,
+.dashboard-page .calendar-expense-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.dashboard-page .calendar-income-dot  { background: var(--d-income); }
+.dashboard-page .calendar-expense-dot { background: var(--d-expense); }
+
+/* dots stay visible on the dark selected day */
+.dashboard-page .calendar-day.selected .calendar-income-dot  { background: #5fe0a8; }
+.dashboard-page .calendar-day.selected .calendar-expense-dot { background: #ff8f87; }
+
+.dashboard-page .calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin: 14px 0 20px;
+    font-size: 13px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .calendar-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* ---------- Daily transactions ---------- */
+
+.dashboard-page .daily-transactions {
+    padding-top: 18px;
+    border-top: 1px solid var(--d-line);
+}
+
+.dashboard-page .daily-transactions h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.dashboard-page .daily-transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.dashboard-page .daily-transaction-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--d-line);
+    border-radius: 12px;
+    background: #fafbf8;
+}
+
+.dashboard-page .daily-transaction-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-page .daily-transaction-details strong {
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dashboard-page .daily-transaction-details span {
+    font-size: 12px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .daily-transaction-amount {
+    flex-shrink: 0;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================
+   TRANSACTION ICONS + AMOUNTS (shared by daily + recent)
+   ========================================================== */
+
+.dashboard-page .transaction-icon,
+.dashboard-page .daily-transaction-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dashboard-page .income-icon {
+    background: var(--d-income-bg);
+    color: var(--d-income);
+}
+
+.dashboard-page .expense-icon {
+    background: var(--d-expense-bg);
+    color: var(--d-expense);
+}
+
+.dashboard-page .daily-transaction-amount.income,
+.dashboard-page .transaction-amount.income {
+    color: var(--d-income);
+}
+
+.dashboard-page .daily-transaction-amount.expense,
+.dashboard-page .transaction-amount.expense {
+    color: var(--d-expense);
+}
+
+/* ==========================================================
+   BUDGET OVERVIEW
+   ========================================================== */
+
+.dashboard-page .budget-summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dashboard-page .dashboard-budget-item {
+    padding: 16px;
+    border: 1px solid var(--d-line);
+    border-radius: 14px;
+    background: #fafbf8;
+}
+
+.dashboard-page .dashboard-budget-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.dashboard-page .dashboard-budget-top > div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dashboard-page .dashboard-budget-top strong {
+    font-size: 15px;
+}
+
+.dashboard-page .dashboard-budget-top > div > span {
+    font-size: 13px;
+    color: var(--d-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-page .budget-status {
+    flex-shrink: 0;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: var(--d-income-bg);
+    color: var(--d-income);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dashboard-page .budget-status.within-budget {
+    background: var(--d-income-bg);
+    color: var(--d-income);
+}
+
+.dashboard-page .budget-status[class*="exceed"] {
+    background: var(--d-expense-bg);
+    color: var(--d-expense);
+}
+
+.dashboard-page .budget-progress {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e3e8df;
+}
+
+.dashboard-page .budget-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--d-green-500);
+    transition: width 0.4s ease;
+}
+
+.dashboard-page .dashboard-budget-item:has(.budget-status[class*="exceed"]) .budget-progress-fill {
+    background: var(--d-expense);
+}
+
+.dashboard-page .budget-progress-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--d-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================
+   RECENT TRANSACTIONS
+   ========================================================== */
+
+.dashboard-page .view-all-button {
+    padding: 8px 16px;
+    border: 1.5px solid var(--d-green-800);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--d-green-800);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.dashboard-page .view-all-button:hover {
+    background: var(--d-green-800);
+    color: #fff;
+}
+
+.dashboard-page .recent-transactions-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-page .recent-transaction-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--d-line);
+}
+
+.dashboard-page .recent-transaction-item:last-child {
+    border-bottom: none;
+}
+
+.dashboard-page .transaction-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dashboard-page .transaction-details strong {
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dashboard-page .transaction-details span {
+    font-size: 13px;
+    color: var(--d-muted);
+}
+
+.dashboard-page .transaction-amount {
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.dashboard-page .dashboard-footer {
+    padding-top: 6px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--d-muted);
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 1100px) {
+    .dashboard-page .dashboard-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-page .dashboard-chart-grid,
+    .dashboard-page .dashboard-lower-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
 
 @media (max-width: 600px) {
-
-    .profile-overlay {
-        padding: 70px 15px 15px;
-
-        justify-content: center;
+    .dashboard-page {
+        padding: 18px 14px 20px;
     }
 
-    .profile-card {
+    .dashboard-page .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-page .dashboard-summary-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-page .quick-actions {
+        flex-direction: column;
+    }
+
+    .dashboard-page .quick-action-button {
         width: 100%;
-
-        max-width: 380px;
     }
 
+    .dashboard-page .dashboard-panel {
+        padding: 16px;
+    }
+
+    .dashboard-page .selected-date-controls button {
+        flex: 1;
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+
+    .dashboard-page .calendar-weekdays,
+    .dashboard-page .calendar-grid {
+        gap: 3px;
+    }
+
+    .dashboard-page .calendar-day {
+        min-height: 40px;
+        font-size: 13px;
+    }
+
+    .dashboard-page .dashboard-budget-top {
+        flex-direction: column;
+    }
+
+    .dashboard-page .budget-progress-info {
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-page .dashboard-spinner {
+        animation-duration: 2s;
+    }
+
+    .dashboard-page .profile-card {
+        animation: none;
+    }
+
+    .dashboard-page *,
+    .dashboard-page *::before,
+    .dashboard-page *::after {
+        transition: none !important;
+    }
 }

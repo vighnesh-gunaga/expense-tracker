@@ -47,7 +47,7 @@ public class TransactionService {
                         new UserNotFoundException("User Not Found"));
 
         Category category = categoryRepository
-                .findByNameAndUserId(
+                .findByNameIgnoreCaseAndUserId(
                         request.getCategoryName(),
                         user.getId()
                 )
@@ -123,7 +123,7 @@ public class TransactionService {
 
         Category category =
                 categoryRepository
-                        .findByNameAndUserId(
+                        .findByNameIgnoreCaseAndUserId(
                                 request.getCategoryName(),
                                 user.getId())
                         .orElseThrow(() ->

@@ -166,88 +166,161 @@ public class CategoryService {
 
     public void createDefaultCategories(User user) {
 
-        List<String> categories;
+        List<String> expenseCategories;
+        List<String> incomeCategories;
 
         switch (user.getUserType()) {
 
-            case STUDENT -> categories = List.of(
-                    "Food",
-                    "Transport",
-                    "Education",
-                    "Books & Stationery",
-                    "Hostel/Rent",
-                    "Mobile & Internet",
-                    "Entertainment",
-                    "Shopping",
-                    "Health",
-                    "Personal Care",
-                    "Travel",
-                    "Other"
-            );
+            case STUDENT -> {
 
-            case WORKING_PROFESSIONAL -> categories = List.of(
-                    "Food",
-                    "Groceries",
-                    "Rent/Home",
-                    "Transport/Fuel",
-                    "Utilities",
-                    "Mobile & Internet",
-                    "Shopping",
-                    "Entertainment",
-                    "Health",
-                    "Insurance",
-                    "Investments/Savings",
-                    "Travel",
-                    "Personal Care",
-                    "Other"
-            );
+                expenseCategories = List.of(
+                        "Food",
+                        "Transport",
+                        "Education",
+                        "Books & Stationery",
+                        "Hostel/Rent",
+                        "Mobile & Internet",
+                        "Entertainment",
+                        "Shopping",
+                        "Health",
+                        "Personal Care",
+                        "Travel",
+                        "Other"
+                );
 
-            case BUSINESS_OWNER -> categories = List.of(
-                    "Food",
-                    "Transport",
-                    "Office",
-                    "Business Supplies",
-                    "Employee Expenses",
-                    "Utilities",
-                    "Marketing",
-                    "Travel",
-                    "Shopping",
-                    "Health",
-                    "Business Services",
-                    "Other"
-            );
+                incomeCategories = List.of(
+                        "Pocket Money",
+                        "Scholarship",
+                        "Part-Time Work",
+                        "Freelance",
+                        "Interest",
+                        "Other Income"
+                );
+            }
 
-            case FREELANCER -> categories = List.of(
-                    "Food",
-                    "Transport",
-                    "Workspace",
-                    "Internet",
-                    "Software & Tools",
-                    "Equipment",
-                    "Client Expenses",
-                    "Travel",
-                    "Shopping",
-                    "Health",
-                    "Entertainment",
-                    "Other"
-            );
+            case WORKING_PROFESSIONAL -> {
 
-            default -> categories = List.of(
-                    "Food",
-                    "Transport",
-                    "Shopping",
-                    "Entertainment",
-                    "Health",
-                    "Other"
-            );
+                expenseCategories = List.of(
+                        "Food",
+                        "Groceries",
+                        "Rent/Home",
+                        "Transport/Fuel",
+                        "Utilities",
+                        "Mobile & Internet",
+                        "Shopping",
+                        "Entertainment",
+                        "Health",
+                        "Insurance",
+                        "Investments/Savings",
+                        "Travel",
+                        "Personal Care",
+                        "Other"
+                );
+
+                incomeCategories = List.of(
+                        "Salary",
+                        "Bonus",
+                        "Freelance",
+                        "Interest",
+                        "Investment Returns",
+                        "Rental Income",
+                        "Other Income"
+                );
+            }
+
+            case BUSINESS_OWNER -> {
+
+                expenseCategories = List.of(
+                        "Food",
+                        "Transport",
+                        "Office",
+                        "Business Supplies",
+                        "Employee Expenses",
+                        "Utilities",
+                        "Marketing",
+                        "Travel",
+                        "Shopping",
+                        "Health",
+                        "Business Services",
+                        "Other"
+                );
+
+                incomeCategories = List.of(
+                        "Business Revenue",
+                        "Sales",
+                        "Service Income",
+                        "Investment Returns",
+                        "Interest",
+                        "Other Income"
+                );
+            }
+
+            case FREELANCER -> {
+
+                expenseCategories = List.of(
+                        "Food",
+                        "Transport",
+                        "Workspace",
+                        "Internet",
+                        "Software & Tools",
+                        "Equipment",
+                        "Client Expenses",
+                        "Travel",
+                        "Shopping",
+                        "Health",
+                        "Entertainment",
+                        "Other"
+                );
+
+                incomeCategories = List.of(
+                        "Freelance Payment",
+                        "Client Payment",
+                        "Project Income",
+                        "Consulting",
+                        "Interest",
+                        "Other Income"
+                );
+            }
+
+            default -> {
+
+                expenseCategories = List.of(
+                        "Food",
+                        "Transport",
+                        "Shopping",
+                        "Entertainment",
+                        "Health",
+                        "Other"
+                );
+
+                incomeCategories = List.of(
+                        "Salary",
+                        "Freelance",
+                        "Interest",
+                        "Other Income"
+                );
+            }
         }
 
-        for (String categoryName : categories) {
+        // Create expense categories
+        for (String categoryName : expenseCategories) {
 
             Category category = new Category();
 
             category.setName(categoryName);
             category.setType(Type.EXPENSE);
+            category.setUser(user);
+
+            categoryRepository.save(category);
+        }
+
+        // Create income categories
+        for (String categoryName : incomeCategories) {
+
+            Category category = new Category();
+
+            category.setName(categoryName);
+            category.setType(Type.INCOME);
             category.setUser(user);
 
             categoryRepository.save(category);

@@ -8,9 +8,17 @@ function Transactions() {
 
     const navigate = useNavigate();
 
+    // ==============================
+    // TRANSACTIONS
+    // ==============================
+
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    // ==============================
+    // TRANSACTION FORM
+    // ==============================
 
     const [amount, setAmount] = useState("");
     const [type, setType] = useState("EXPENSE");
@@ -18,47 +26,92 @@ function Transactions() {
     const [date, setDate] = useState("");
     const [categoryName, setCategoryName] = useState("");
 
+    // ==============================
+    // CATEGORIES
+    // ==============================
+
+    const [categories, setCategories] = useState([]);
+
+    // ==============================
+    // MESSAGES
+    // ==============================
+
     const [message, setMessage] = useState("");
     const [editingId, setEditingId] = useState(null);
+
+    // ==============================
+    // SEARCH
+    // ==============================
 
     const [searchId, setSearchId] = useState("");
     const [searchedTransaction, setSearchedTransaction] = useState(null);
 
-    // Filters
+    // ==============================
+    // FILTERS
+    // ==============================
+
     const [filterType, setFilterType] = useState("ALL");
     const [filterCategory, setFilterCategory] = useState("");
     const [filterDate, setFilterDate] = useState("");
 
-    // Sorting
+    // ==============================
+    // SORTING
+    // ==============================
+
     const [sortOption, setSortOption] = useState("NEWEST");
 
-    // Pagination
+    // ==============================
+    // PAGINATION
+    // ==============================
+
     const [currentPage, setCurrentPage] = useState(1);
     const transactionsPerPage = 5;
 
+    // ==============================
+    // VIEW TRANSACTION
+    // ==============================
+
     const [viewedTransaction, setViewedTransaction] = useState(null);
 
-
-
-
     // ==============================
-    // EDIT TRANSACTION
+    // LOAD CATEGORIES
     // ==============================
 
-    const handleEditTransaction = (transaction) => {
+    useEffect(() => {
 
-        setEditingId(transaction.id);
+        const loadCategories = async () => {
 
-        setAmount(transaction.amount);
-        setType(transaction.type);
-        setDescription(transaction.description);
-        setDate(transaction.date);
-        setCategoryName(transaction.categoryName);
+            try {
 
-        setMessage("");
-        setError("");
-    };
+                const response =
+                    await api.get("/api/categories");
 
+                setCategories(response.data);
+
+            } catch (error) {
+
+                if (error.response) {
+
+                    setError(
+                        error.response.data.message ||
+                        "Unable to load categories"
+                    );
+
+                } else {
+
+                    setError(
+                        "Unable to connect to server"
+                    );
+
+                }
+
+            }
+
+        };
+
+        loadCategories();
+
+    }, []);
 
     // ==============================
     // LOAD TRANSACTIONS
@@ -104,6 +157,23 @@ function Transactions() {
 
     }, []);
 
+    // ==============================
+    // EDIT TRANSACTION
+    // ==============================
+
+    const handleEditTransaction = (transaction) => {
+
+        setEditingId(transaction.id);
+
+        setAmount(transaction.amount);
+        setType(transaction.type);
+        setDescription(transaction.description);
+        setDate(transaction.date);
+        setCategoryName(transaction.categoryName);
+
+        setMessage("");
+        setError("");
+    };
 
     // ==============================
     // SAVE TRANSACTION
@@ -167,6 +237,7 @@ function Transactions() {
                 );
             }
 
+            // Reset form
             setAmount("");
             setType("EXPENSE");
             setDescription("");
@@ -193,6 +264,10 @@ function Transactions() {
         }
 
     };
+
+    // ==============================
+    // VIEW TRANSACTION
+    // ==============================
 
     const handleViewTransaction = async (id) => {
 
@@ -226,8 +301,8 @@ function Transactions() {
             }
 
         }
-    };
 
+    };
 
     // ==============================
     // DELETE TRANSACTION
@@ -285,7 +360,6 @@ function Transactions() {
 
     };
 
-
     // ==============================
     // SEARCH TRANSACTION
     // ==============================
@@ -329,7 +403,6 @@ function Transactions() {
 
     };
 
-
     // ==============================
     // FILTER TRANSACTIONS
     // ==============================
@@ -360,7 +433,6 @@ function Transactions() {
             );
 
         });
-
 
     // ==============================
     // SORT TRANSACTIONS
@@ -411,7 +483,6 @@ function Transactions() {
             }
         );
 
-
     // ==============================
     // PAGINATION
     // ==============================
@@ -432,13 +503,19 @@ function Transactions() {
             startIndex + transactionsPerPage
         );
 
+    // ==============================
+    // STATISTICS
+    // ==============================
 
     const totalTransactions =
         filteredTransactions.length;
 
     const totalIncome =
         filteredTransactions
-            .filter((transaction) => transaction.type === "INCOME")
+            .filter(
+                (transaction) =>
+                    transaction.type === "INCOME"
+            )
             .reduce(
                 (total, transaction) =>
                     total + Number(transaction.amount),
@@ -447,7 +524,10 @@ function Transactions() {
 
     const totalExpense =
         filteredTransactions
-            .filter((transaction) => transaction.type === "EXPENSE")
+            .filter(
+                (transaction) =>
+                    transaction.type === "EXPENSE"
+            )
             .reduce(
                 (total, transaction) =>
                     total + Number(transaction.amount),
@@ -457,11 +537,18 @@ function Transactions() {
     const balance =
         totalIncome - totalExpense;
 
+    // ==============================
+    // EXPORT CSV
+    // ==============================
 
     const handleExportCSV = () => {
 
         if (filteredTransactions.length === 0) {
-            setError("No transactions available to export");
+
+            setError(
+                "No transactions available to export"
+            );
+
             return;
         }
 
@@ -484,33 +571,46 @@ function Transactions() {
                 transaction.amount
             ]
         );
-        const totalIncome = filteredTransactions
-            .filter((transaction) => transaction.type === "INCOME")
-            .reduce(
-                (total, transaction) =>
-                    total + Number(transaction.amount),
-                0
-            );
 
-        const totalExpense = filteredTransactions
-            .filter((transaction) => transaction.type === "EXPENSE")
-            .reduce(
-                (total, transaction) =>
-                    total + Number(transaction.amount),
-                0
-            );
+        const exportIncome =
+            filteredTransactions
+                .filter(
+                    (transaction) =>
+                        transaction.type === "INCOME"
+                )
+                .reduce(
+                    (total, transaction) =>
+                        total + Number(transaction.amount),
+                    0
+                );
 
-        const balance = totalIncome - totalExpense;
+        const exportExpense =
+            filteredTransactions
+                .filter(
+                    (transaction) =>
+                        transaction.type === "EXPENSE"
+                )
+                .reduce(
+                    (total, transaction) =>
+                        total + Number(transaction.amount),
+                    0
+                );
+
+        const exportBalance =
+            exportIncome - exportExpense;
 
         const csvContent = [
             headers,
             ...rows,
             [],
             ["SUMMARY"],
-            ["Total Transactions", filteredTransactions.length],
-            ["Total Income", totalIncome],
-            ["Total Expense", totalExpense],
-            ["Balance", balance]
+            [
+                "Total Transactions",
+                filteredTransactions.length
+            ],
+            ["Total Income", exportIncome],
+            ["Total Expense", exportExpense],
+            ["Balance", exportBalance]
         ]
             .map((row) =>
                 row
@@ -539,7 +639,9 @@ function Transactions() {
             .split("T")[0];
 
         link.href = url;
-        link.download = `transactions_${exportDate}.csv`;
+
+        link.download =
+            `transactions_${exportDate}.csv`;
 
         document.body.appendChild(link);
 
@@ -549,7 +651,6 @@ function Transactions() {
 
         URL.revokeObjectURL(url);
     };
-
 
     // ==============================
     // LOADING
@@ -568,8 +669,6 @@ function Transactions() {
         );
 
     }
-
-    
 
     // ==============================
     // MAIN UI
@@ -591,29 +690,65 @@ function Transactions() {
                 ← Back to Dashboard
             </button>
 
+            {/* ==============================
+                STATISTICS
+            ============================== */}
+
             <div className="transaction-statistics">
 
                 <div className="transaction-stat-card">
-                    <h3>Total Transactions</h3>
-                    <p>{totalTransactions}</p>
+
+                    <h3>
+                        Total Transactions
+                    </h3>
+
+                    <p>
+                        {totalTransactions}
+                    </p>
+
                 </div>
 
                 <div className="transaction-stat-card income-stat">
-                    <h3>Total Income</h3>
-                    <p>₹ {totalIncome.toFixed(2)}</p>
+
+                    <h3>
+                        Total Income
+                    </h3>
+
+                    <p>
+                        ₹ {totalIncome.toFixed(2)}
+                    </p>
+
                 </div>
 
                 <div className="transaction-stat-card expense-stat">
-                    <h3>Total Expense</h3>
-                    <p>₹ {totalExpense.toFixed(2)}</p>
+
+                    <h3>
+                        Total Expense
+                    </h3>
+
+                    <p>
+                        ₹ {totalExpense.toFixed(2)}
+                    </p>
+
                 </div>
 
                 <div className="transaction-stat-card balance-stat">
-                    <h3>Balance</h3>
-                    <p>₹ {balance.toFixed(2)}</p>
+
+                    <h3>
+                        Balance
+                    </h3>
+
+                    <p>
+                        ₹ {balance.toFixed(2)}
+                    </p>
+
                 </div>
 
             </div>
+
+            {/* ==============================
+                EXPORT
+            ============================== */}
 
             <div className="transaction-actions">
 
@@ -627,10 +762,9 @@ function Transactions() {
 
             </div>
 
-
-            {/* =========================
+            {/* ==============================
                 MESSAGES
-            ========================= */}
+            ============================== */}
 
             {error && (
                 <div className="error-message">
@@ -644,10 +778,9 @@ function Transactions() {
                 </div>
             )}
 
-
-            {/* =========================
+            {/* ==============================
                 ADD / UPDATE TRANSACTION
-            ========================= */}
+            ============================== */}
 
             <section className="transaction-form-section">
 
@@ -661,6 +794,8 @@ function Transactions() {
                     className="transaction-form"
                     onSubmit={handleSaveTransaction}
                 >
+
+                    {/* AMOUNT */}
 
                     <div className="form-group">
 
@@ -683,6 +818,7 @@ function Transactions() {
 
                     </div>
 
+                    {/* TYPE */}
 
                     <div className="form-group">
 
@@ -692,11 +828,16 @@ function Transactions() {
 
                         <select
                             value={type}
-                            onChange={(event) =>
+                            onChange={(event) => {
+
                                 setType(
                                     event.target.value
-                                )
-                            }
+                                );
+
+                                // Reset category when type changes
+                                setCategoryName("");
+
+                            }}
                         >
 
                             <option value="EXPENSE">
@@ -711,6 +852,7 @@ function Transactions() {
 
                     </div>
 
+                    {/* DESCRIPTION */}
 
                     <div className="form-group">
 
@@ -728,11 +870,13 @@ function Transactions() {
                             }
                             minLength="3"
                             maxLength="100"
+                            placeholder="Example: Monthly salary"
                             required
                         />
 
                     </div>
 
+                    {/* DATE */}
 
                     <div className="form-group">
 
@@ -753,29 +897,50 @@ function Transactions() {
 
                     </div>
 
+                    {/* CATEGORY */}
 
                     <div className="form-group">
 
                         <label>
-                            Category Name
+                            Category
                         </label>
 
-                        <input
-                            type="text"
+                        <select
                             value={categoryName}
                             onChange={(event) =>
                                 setCategoryName(
                                     event.target.value
                                 )
                             }
-                            minLength="2"
-                            maxLength="30"
-                            placeholder="Example: Food"
                             required
-                        />
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            {categories
+                                .filter(
+                                    (category) =>
+                                        category.type === type
+                                )
+                                .map((category) => (
+
+                                    <option
+                                        key={category.id}
+                                        value={category.name}
+                                    >
+                                        {category.name}
+                                    </option>
+
+                                ))
+                            }
+
+                        </select>
 
                     </div>
 
+                    {/* BUTTONS */}
 
                     <div className="form-buttons">
 
@@ -787,7 +952,6 @@ function Transactions() {
                                 ? "Add Transaction"
                                 : "Update Transaction"}
                         </button>
-
 
                         {editingId !== null && (
 
@@ -818,10 +982,9 @@ function Transactions() {
 
             </section>
 
-
-            {/* =========================
+            {/* ==============================
                 SEARCH TRANSACTION
-            ========================= */}
+            ============================== */}
 
             <section className="search-section">
 
@@ -854,7 +1017,6 @@ function Transactions() {
                     </button>
 
                 </form>
-
 
                 {searchedTransaction && (
 
@@ -895,10 +1057,9 @@ function Transactions() {
 
             </section>
 
-
-            {/* =========================
+            {/* ==============================
                 FILTER AND SORT
-            ========================= */}
+            ============================== */}
 
             <section className="filter-section">
 
@@ -907,7 +1068,6 @@ function Transactions() {
                 </h2>
 
                 <div className="filter-container">
-
 
                     {/* TYPE */}
 
@@ -946,7 +1106,6 @@ function Transactions() {
 
                     </div>
 
-
                     {/* CATEGORY */}
 
                     <div className="filter-group">
@@ -972,7 +1131,6 @@ function Transactions() {
 
                     </div>
 
-
                     {/* DATE */}
 
                     <div className="filter-group">
@@ -996,7 +1154,6 @@ function Transactions() {
                         />
 
                     </div>
-
 
                     {/* SORT */}
 
@@ -1039,7 +1196,6 @@ function Transactions() {
 
                     </div>
 
-
                     {/* CLEAR FILTERS */}
 
                     <button
@@ -1061,6 +1217,10 @@ function Transactions() {
                 </div>
 
             </section>
+
+            {/* ==============================
+                VIEWED TRANSACTION
+            ============================== */}
 
             {viewedTransaction && (
 
@@ -1120,17 +1280,15 @@ function Transactions() {
 
             )}
 
-
-            {/* =========================
+            {/* ==============================
                 TRANSACTION LIST
-            ========================= */}
+            ============================== */}
 
             <section className="transaction-list-section">
 
                 <h2>
                     Your Transactions
                 </h2>
-
 
                 {filteredTransactions.length === 0 ? (
 
@@ -1178,7 +1336,6 @@ function Transactions() {
 
                                         </div>
 
-
                                         <div className="transaction-details">
 
                                             <p>
@@ -1204,14 +1361,15 @@ function Transactions() {
 
                                         </div>
 
-
                                         <div className="transaction-actions">
 
                                             <button
                                                 className="view-button"
                                                 type="button"
                                                 onClick={() =>
-                                                    handleViewTransaction(transaction.id)
+                                                    handleViewTransaction(
+                                                        transaction.id
+                                                    )
                                                 }
                                             >
                                                 View
@@ -1221,7 +1379,9 @@ function Transactions() {
                                                 className="edit-button"
                                                 type="button"
                                                 onClick={() =>
-                                                    handleEditTransaction(transaction)
+                                                    handleEditTransaction(
+                                                        transaction
+                                                    )
                                                 }
                                             >
                                                 Edit
@@ -1231,7 +1391,9 @@ function Transactions() {
                                                 className="delete-button"
                                                 type="button"
                                                 onClick={() =>
-                                                    handleDeleteTransaction(transaction.id)
+                                                    handleDeleteTransaction(
+                                                        transaction.id
+                                                    )
                                                 }
                                             >
                                                 Delete
@@ -1246,10 +1408,9 @@ function Transactions() {
 
                         </div>
 
-
-                        {/* =========================
+                        {/* ==============================
                             PAGINATION
-                        ========================= */}
+                        ============================== */}
 
                         {totalPages > 1 && (
 
@@ -1270,12 +1431,10 @@ function Transactions() {
                                     Previous
                                 </button>
 
-
                                 <span>
                                     Page {currentPage} of{" "}
                                     {totalPages}
                                 </span>
-
 
                                 <button
                                     type="button"
@@ -1305,7 +1464,6 @@ function Transactions() {
         </div>
 
     );
-
 }
 
 export default Transactions;

@@ -1,0 +1,504 @@
+/* ==========================================================
+   Login.css — only used by Login.jsx (all classes start with lg-)
+   ========================================================== */
+
+.lg-page,
+.lg-page *,
+.lg-page *::before,
+.lg-page *::after {
+    box-sizing: border-box;
+}
+
+.lg-page {
+    --lg-green-900: #0c3027;
+    --lg-green-800: #0f3d33;
+    --lg-green-700: #17594a;
+    --lg-green-500: #2f8a73;
+    --lg-gold: #f2a93b;
+    --lg-gold-dark: #d98e1f;
+    --lg-paper: #fbfaf6;
+    --lg-ink: #17231f;
+    --lg-muted: #66746f;
+    --lg-line: #dfe3dc;
+
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    background: #e9ede6;
+    color: var(--lg-ink);
+    text-align: left;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+.lg-card {
+    width: 100%;
+    max-width: 980px;
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    background: var(--lg-paper);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(12, 48, 39, 0.18);
+}
+
+/* ---------- Left panel ---------- */
+
+.lg-left {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 40px 36px;
+    color: #fff;
+    background-color: var(--lg-green-800);
+    background-image: repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.04) 0,
+            rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px,
+            transparent 32px
+    );
+}
+
+.lg-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lg-logo-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--lg-gold);
+    color: var(--lg-green-900);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.lg-logo-text {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.lg-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* ---------- Illustration ---------- */
+
+.lg-illustration {
+    position: relative;
+    height: 190px;
+    margin: 4px 0;
+}
+
+.lg-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 180px;
+    height: 180px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(47, 138, 115, 0.55), rgba(47, 138, 115, 0) 70%);
+}
+
+.lg-wallet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170px;
+    height: 112px;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    border-radius: 16px;
+    background: var(--lg-green-700);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.lg-wallet-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    background: rgba(0, 0, 0, 0.22);
+}
+
+.lg-wallet-line {
+    position: absolute;
+    left: 16px;
+    bottom: 34px;
+    width: 70px;
+    height: 7px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.lg-wallet-line.short {
+    bottom: 18px;
+    width: 42px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lg-wallet-circle {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--lg-gold);
+    color: var(--lg-green-900);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.lg-coin {
+    position: absolute;
+    top: 6px;
+    right: 22%;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--lg-gold);
+    border: 3px solid var(--lg-gold-dark);
+    color: var(--lg-green-900);
+    font-size: 22px;
+    font-weight: 700;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    animation: lg-coin-bob 3.4s ease-in-out infinite;
+}
+
+@keyframes lg-coin-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+/* ---------- Feature row ---------- */
+
+.lg-features {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.lg-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.lg-feature strong {
+    font-size: 14px;
+}
+
+.lg-feature span {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.lg-feature-icon {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 8px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--lg-gold);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* ---------- Right panel ---------- */
+
+.lg-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 44px;
+}
+
+.lg-content {
+    width: 100%;
+    max-width: 400px;
+}
+
+.lg-heading {
+    margin: 0 0 6px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--lg-ink);
+}
+
+.lg-subtitle {
+    margin: 0 0 24px;
+    font-size: 15px;
+    color: var(--lg-muted);
+}
+
+.lg-error {
+    margin-bottom: 16px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid #f3c2bd;
+    background: #fdecea;
+    color: #a8231a;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* ---------- Form ---------- */
+
+.lg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.lg-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.lg-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lg-ink);
+}
+
+.lg-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lg-forgot {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lg-green-700);
+    text-decoration: none;
+}
+
+.lg-forgot:hover {
+    text-decoration: underline;
+}
+
+.lg-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lg-input-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 15px;
+    color: var(--lg-muted);
+    pointer-events: none;
+}
+
+.lg-input-wrap input {
+    width: 100%;
+    height: 48px;
+    margin: 0;
+    padding: 0 46px 0 42px;
+    border: 1.5px solid var(--lg-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--lg-ink);
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.lg-input-wrap input::placeholder {
+    color: #a0aaa6;
+}
+
+.lg-input-wrap input:focus {
+    outline: none;
+    border-color: var(--lg-green-500);
+    box-shadow: 0 0 0 3px rgba(47, 138, 115, 0.2);
+}
+
+.lg-toggle {
+    position: absolute;
+    right: 6px;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.lg-toggle:hover {
+    background: #eef1ec;
+}
+
+.lg-toggle:focus-visible,
+.lg-submit:focus-visible,
+.lg-switch a:focus-visible,
+.lg-forgot:focus-visible {
+    outline: 3px solid rgba(47, 138, 115, 0.45);
+    outline-offset: 2px;
+}
+
+.lg-submit {
+    height: 50px;
+    margin-top: 4px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: var(--lg-green-800);
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.lg-submit:hover:not(:disabled) {
+    background: var(--lg-green-700);
+}
+
+.lg-submit:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.lg-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ---------- Switch to register ---------- */
+
+.lg-switch {
+    margin-top: 26px;
+    text-align: center;
+}
+
+.lg-switch-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.lg-switch-line span {
+    flex: 1;
+    height: 1px;
+    background: var(--lg-line);
+}
+
+.lg-switch-line p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--lg-muted);
+    white-space: nowrap;
+}
+
+.lg-switch a {
+    display: block;
+    padding: 12px;
+    border: 1.5px solid var(--lg-green-800);
+    border-radius: 12px;
+    color: var(--lg-green-800);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.lg-switch a:hover {
+    background: var(--lg-green-800);
+    color: #fff;
+}
+
+.lg-developed {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--lg-muted);
+}
+
+.lg-developed strong {
+    margin-left: 4px;
+    color: var(--lg-ink);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+    .lg-card {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+    }
+
+    .lg-left {
+        padding: 24px;
+        gap: 14px;
+    }
+
+    .lg-title {
+        font-size: 22px;
+    }
+
+    .lg-illustration,
+    .lg-features {
+        display: none;
+    }
+
+    .lg-right {
+        padding: 28px 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lg-page {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .lg-card {
+        max-width: none;
+        border-radius: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lg-coin {
+        animation: none;
+    }
+
+    .lg-submit,
+    .lg-input-wrap input {
+        transition: none;
+    }
+}
